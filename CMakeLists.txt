@@ -100,3 +100,29 @@ include_directories("./include")
 # Add subdirectories
 #-------------------------------------------------------------------------------
 add_subdirectory("testcases")
+
+
+#===============================================================================
+# Generate Documentation
+#===============================================================================
+# cache the BUILD_DOC variable. must be enabled by user to build documentation
+set(BUILD_DOC FALSE CACHE BOOL "Build documentation")
+
+if(BUILD_DOC)
+    # find sphinx
+    find_package(Sphinx REQUIRED)
+
+    # Sphinx cache with pickled ReST documents
+    set(SPHINX_CACHE_DIR "${CMAKE_CURRENT_BINARY_DIR}/_doctrees")
+
+    # HTML output directory
+    set(SPHINX_HTML_DIR "${CMAKE_CURRENT_BINARY_DIR}/doc")
+
+    add_custom_target(mtk_documentation ALL
+    ${SPHINX_EXECUTABLE}
+        -q -b html
+        -d "${SPHINX_CACHE_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/doc"
+        "${SPHINX_HTML_DIR}"
+    COMMENT "Building HTML documentation using Sphinx.")
+endif()
