@@ -66,7 +66,7 @@ public:
         return pairs[index];
 	};
 
-    size_t Size()
+    int Size()
     {
         return pairs.size();
 	};

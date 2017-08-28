@@ -51,11 +51,12 @@ double ComputeMAC(VectorXcd phi1, VectorXcd phi2)
 MatrixXd SetsComputeMAC(ModeSet set1, ModeSet set2)
 {
     // preallocate MAC matrix
-    MatrixXd mac(set1.Size(), set2.Size());
+	MatrixXd mac;
+	mac = MatrixXd::Zero(set1.Size(), set2.Size());
 
-    for (int i; i < set1.Size(); ++i)
+    for (int i = 0; i < set1.Size(); ++i)
     {
-        for (int j; j < set2.Size(); ++j)
+        for (int j = 0; j < set2.Size(); ++j)
         {
             mac(i,j) = ComputeMAC(set1[i].evector, set2[j].evector);
         }

@@ -55,6 +55,26 @@ int main(int arg, char* argv)
     cout << "vc1 with vc1: " << ComputeMAC(vc1,vc1) << endl;
     cout << "vc1 with vc2: " << ComputeMAC(vc1,vc2) << endl;
 
+
+	VectorXd v3(3);
+	v3 << 0.0, 0.0, 1.0;
+
+	ModeSet set1, set2;
+	double temp = 0.0;
+
+	set1.AddPair(temp, v1);
+	set1.AddPair(temp, v2);
+	set1.AddPair(temp, v3);
+
+	set2.AddPair(temp, v2);
+	set2.AddPair(temp, v1);
+	set2.AddPair(temp, v3);
+	
+
+	cout << "MAC real mode sets:" << endl;
+	cout << "set1 with set1: " << endl << SetsComputeMAC(set1, set1) << endl << endl;
+	cout << "set1 with set2: " << endl << SetsComputeMAC(set1, set2) << endl;
+
 	cout << endl << "Test cases complete." << endl << endl;
 
     return 0;
