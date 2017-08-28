@@ -34,8 +34,12 @@ using namespace Eigen;
 //------------------------------------------------------------------------------
 double ComputeMAC(VectorXcd phi1, VectorXcd phi2)
 {
-    complex<double> mac = pow(abs(phi1.conjugate().dot(phi2)), 2) / 
-        (phi1.conjugate().dot(phi1) * phi2.conjugate().dot(phi2));
+	// note: {expression}(0) is used here as a work around to keep datatypes
+	// consistent. This works in this scope, because the results of the
+	// expressions must be a scalar. Thus, calling the first entry just
+	// forces the output as a double.
+    complex<double> mac = pow(abs((phi1.adjoint() * phi2)(0)), 2) / 
+        (phi1.adjoint() * phi1 * phi2.adjoint() * phi2)(0);
 
     return mac.real();
 };
