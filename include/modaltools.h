@@ -17,7 +17,7 @@
 //==============================================================================
 
 // system headers
-
+#include <complex>
 
 // Eigen headers
 #include <Eigen/Eigen>
@@ -34,26 +34,28 @@ using namespace Eigen;
 //------------------------------------------------------------------------------
 double ComputeMAC(VectorXcd phi1, VectorXcd phi2)
 {
-    double mac = pow(abs(phi1.adjoint() * phi2), 2) / 
-        (phi1.adjoint() * phi1 * phi2.adjoint() * phi2);
+    complex<double> mac = pow(abs(phi1.conjugate().dot(phi2)), 2) / 
+        (phi1.conjugate().dot(phi1) * phi2.conjugate().dot(phi2));
 
-    return mac;
-}
+    return mac.real();
+};
 
 
 
-// Comparison of two mode sets (using MAC) 
+// Comparison of two mode sets (using MAC)
 //------------------------------------------------------------------------------
 MatrixXd SetsComputeMAC(ModeSet set1, ModeSet set2)
 {
     // preallocate MAC matrix
-    MatrixXd mac(set1.pairs.size(), set2.pairs.size());
+    MatrixXd mac(set1.Size(), set2.Size());
 
-    for (int i; i < set1.pairs.size(); ++i)
+    for (int i; i < set1.Size(); ++i)
     {
-        for (int j; j < set2.pairs.size(); ++j)
+        for (int j; j < set2.Size(); ++j)
         {
-            mac(i,j) = ComputeMAC(modeset1.pairs[i],modeset2.pairs[j]);
+            mac(i,j) = ComputeMAC(set1[i].evector, set2[j].evector);
         }
-    }// need to overload [] or something to avoid ".pairs"
-}
+    }
+
+	return mac.real();
+};

@@ -12,52 +12,50 @@
 //
 // Author: Christopher A. Lupp
 //
-// Data Types
+// Benchmarks
 //
 //==============================================================================
 
 // system headers
-#include <vector>
+#include <iostream>
 
 // Eigen headers
 #include <Eigen/Eigen>
 
+// HDF5 headers
+#include "hdf5.h"
+
 // MTK headers
 #include "modaltools.h"
 
-
 using namespace std;
-using namespace Eigen;
 
 
-class EigenPair
+
+int main(int arg, char* argv)
 {
-public:
-    double evalue;
-    VectorXd evector;
+	cout << endl << "Running test cases of modal functions." << endl << endl;
 
-    EigenPair(){};
-    EigenPair(double eval, VectorXd evec)
-    {
-        evalue = eval;
-        evector = evec;
-    }
+    VectorXd v1(3), v2(3);
 
-    ~EigenPair(){};
-}
+    v1 << 1.0, 0.0, 0.0;
+    v2 << 0.0, 1.0, 0.0;
+
+	cout << "MAC of real vectors:" << endl;
+    cout << "v1 with v1: " << ComputeMAC(v1,v1) << endl;
+	cout << "v1 with v1: " << ComputeMAC(v1, v2) << endl << endl;
 
 
+    VectorXcd vc1(3), vc2(3);
 
-class ModeSet
-{
-public:
-    vector<EigenPair> pairs;
+    vc1 << 1.0 + 1.0i,0.0, 0.0;
+    vc2 << 0.0, 1.0 + 1.0i, 0.0;
 
-    ModeSet(){};
-    ~ModeSet(){};
+	cout << "MAC of complex vectors:" << endl;
+    cout << "vc1 with vc1: " << ComputeMAC(vc1,vc1) << endl;
+    cout << "vc1 with vc2: " << ComputeMAC(vc1,vc2) << endl;
 
-    void AddPair(double eval, VectorXd evec)
-    {
-        pairs.push_back(EigenPair(eval, evec));
-    }
+	cout << endl << "Test cases complete." << endl << endl;
+
+    return 0;
 }

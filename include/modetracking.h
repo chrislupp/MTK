@@ -41,12 +41,14 @@ vector<ModeSet> TrackModes(vector<ModeSet> data)
     // temporary modeset for results
     ModeSet set_temp;
 
-    for (int i = 0; i < data[0].pairs.size(); ++i)
+    // sorting of seed mode set
+    for (int i = 0; i < data[0].size(); ++i)
      {
+        // remove all eigenpairs with negative imaginary part
         if (data[0].pairs[i].evalue.imag >= 0)
         {
-            set_temp.AddPair(data[0].pairs[i].evalue, data[0].pairs[i].evector);
-            result.push_back(set_temp)
+            set_temp.AddPair(data[0][i].evalue, data[0][i].evector);
+            result.push_back(set_temp);
         }
      }
         
@@ -56,29 +58,29 @@ vector<ModeSet> TrackModes(vector<ModeSet> data)
         // blacklist
         vector<int> exclude;
 
-        for j in range(len(result[i-1].pairs))
+        for (int j = 0; j < result[i-1].size(); ++j)
         {
             // best MAC for mode j
             best_index = 0;
             mac_best = 0.0;
 
-            double best_val = data[i+1].pairs[0].evalue;
-            VectorXd best_vec = data[i+1].pairs[0].evector;
+            double best_val = data[i+1][0].evalue;
+            VectorXd best_vec = data[i+1][0].evector;
 
 
             // previous mode
-            VetorXd prev_mode = result[i].pairs[j].evector;
+            VetorXd prev_mode = result[i][j].evector;
 
-            for k in range(len(data[i+1].pairs))
+            for (int k = 0; k < data[i+1].size(); ++k)
             {
-                if (k in exclude)
+                if (find(exclude.begin, exclude.end(), k) != exclude.end())
                 {
                     continue;
                 }
                 else
                 {
-                    current_mode = data[i+1].pairs[k].evector;
-                    mac_temp = MAC(prev_mode, current_mode);
+                    VectorXd current_mode = data[i+1][k].evector;
+                    mac_temp = ComputeMAC(prev_mode, current_mode);
                 }
 
                 if (mac_temp > mac_best)
@@ -88,8 +90,8 @@ vector<ModeSet> TrackModes(vector<ModeSet> data)
 
                     // save previous mode
                     best_index = k;
-                    best_val = data[i+1].pairs[k].evalue;
-                    best_vec = data[i+1].pairs[k].evector;
+                    best_val = data[i+1][k].evalue;
+                    best_vec = data[i+1][k].evector;
                 }
             }
 
