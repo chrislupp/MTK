@@ -91,6 +91,17 @@ set(HDF5_DEBUG_DIR $ENV{HDF5_DEBUG_DIR} CACHE STRING "HDF5 Debug root")
 
 
 #-------------------------------------------------------------------------------
+# Add HDF5-Eigen
+#-------------------------------------------------------------------------------
+
+# set HDF5-Eigen directory
+set (HDF5Eigen_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/hdf5_eigen")
+
+# include HDF5-Eigen
+include_directories(${HDF5Eigen_INCLUDE_DIR})
+
+
+#-------------------------------------------------------------------------------
 # Add MTK headers
 #-------------------------------------------------------------------------------
 include_directories("./include")
