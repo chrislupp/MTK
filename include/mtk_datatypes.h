@@ -69,10 +69,29 @@ private:
     vector<EigenPair> pairs;
 
 public:
-    
-    ModeSet(){};
-    ~ModeSet(){};
+	// Constructors and Destructor
+	ModeSet() {};
 
+	ModeSet(VectorXd evals, MatrixXd evecs)
+	{
+		for (int i = 0; i < evals.size(); i++)
+		{
+			AddPair(evals(i), evecs.col(i));
+		}
+	};
+
+	ModeSet(VectorXcd evals, MatrixXcd evecs)
+	{
+		for (int i = 0; i < evals.size(); i++)
+		{
+			AddPair(evals(i), evecs.col(i));
+		}
+	};
+
+	~ModeSet() {};
+
+
+	// add eigenpair to modeset
 	void AddPair(double eval, VectorXd evec)
 	{
 		pairs.push_back(EigenPair(eval, evec));
@@ -88,6 +107,8 @@ public:
 		pairs.push_back(input);
 	};
 
+
+	// operators and simple functions
     EigenPair operator[](int index)
     {
         return pairs[index];
