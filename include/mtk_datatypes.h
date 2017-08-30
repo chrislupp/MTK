@@ -15,6 +15,10 @@
 // Data Types
 //
 //==============================================================================
+#ifndef MTK_DATATYPES_H
+
+#define MTK_DATATYPES_H
+
 
 // system headers
 #include <vector>
@@ -27,24 +31,38 @@ using namespace std;
 using namespace Eigen;
 
 
+// EigenPair
+//------------------------------------------------------------------------------
+// pair of eigenvalue and eigenvector
+//------------------------------------------------------------------------------
 class EigenPair
 {
 public:
-    double evalue;
-    VectorXd evector;
+    complex<double> evalue;
+    VectorXcd evector;
 
     EigenPair(){};
-    EigenPair(double eval, VectorXd evec)
+
+	EigenPair(double eval, VectorXd evec)
+	{
+		evalue = eval + 0i;
+		evector = evec + VectorXd::Zero(evec.size())*1i;
+	};
+
+    EigenPair(complex<double> eval, VectorXcd evec)
     {
         evalue = eval;
         evector = evec;
-    }
+	};
 
     ~EigenPair(){};
 };
 
 
-
+// ModeSet
+//------------------------------------------------------------------------------
+// set of eigenpairs
+//------------------------------------------------------------------------------
 class ModeSet
 {
 private:
@@ -52,13 +70,22 @@ private:
 
 public:
     
-
     ModeSet(){};
     ~ModeSet(){};
 
-    void AddPair(double eval, VectorXd evec)
+	void AddPair(double eval, VectorXd evec)
+	{
+		pairs.push_back(EigenPair(eval, evec));
+	};
+
+    void AddPair(complex<double> eval, VectorXcd evec)
     {
         pairs.push_back(EigenPair(eval, evec));
+	};
+
+	void AddPair(EigenPair input)
+	{
+		pairs.push_back(input);
 	};
 
     EigenPair operator[](int index)
@@ -68,6 +95,8 @@ public:
 
     int Size()
     {
-        return pairs.size();
+        return int(pairs.size());
 	};
 };
+
+#endif

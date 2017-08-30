@@ -15,6 +15,9 @@
 // Mode Tracking
 //
 //==============================================================================
+#ifndef MTK_MODETRACKING_H
+
+#define MTK_MODETRACKING_H
 
 // system headers
 #include <vector>
@@ -42,10 +45,10 @@ vector<ModeSet> TrackModes(vector<ModeSet> data)
     ModeSet set_temp;
 
     // sorting of seed mode set
-    for (int i = 0; i < data[0].size(); ++i)
+    for (int i = 0; i < data[0].Size(); ++i)
      {
         // remove all eigenpairs with negative imaginary part
-        if (data[0].pairs[i].evalue.imag >= 0)
+        if (data[0][i].evalue.imag() >= 0.0)
         {
             set_temp.AddPair(data[0][i].evalue, data[0][i].evector);
             result.push_back(set_temp);
@@ -55,31 +58,31 @@ vector<ModeSet> TrackModes(vector<ModeSet> data)
 
     for (int i = 0; i < data.size() - 1; ++i)
     {
-        // blacklist
         vector<int> exclude;
+		double mac_temp;
 
-        for (int j = 0; j < result[i-1].size(); ++j)
+        for (int j = 0; j < result[i-1].Size(); ++j)
         {
             // best MAC for mode j
-            best_index = 0;
-            mac_best = 0.0;
+            int best_index = 0;
+            double mac_best = 0.0;
 
-            double best_val = data[i+1][0].evalue;
-            VectorXd best_vec = data[i+1][0].evector;
+            complex<double> best_val = data[i+1][0].evalue;
+            VectorXcd best_vec = data[i+1][0].evector;
 
 
             // previous mode
-            VetorXd prev_mode = result[i][j].evector;
+            VectorXcd prev_mode = result[i][j].evector;
 
-            for (int k = 0; k < data[i+1].size(); ++k)
+            for (int k = 0; k < data[i+1].Size(); ++k)
             {
-                if (find(exclude.begin, exclude.end(), k) != exclude.end())
+                if (find(exclude.begin(), exclude.end(), k) != exclude.end())
                 {
                     continue;
                 }
                 else
                 {
-                    VectorXd current_mode = data[i+1][k].evector;
+                    VectorXcd current_mode = data[i+1][k].evector;
                     mac_temp = ComputeMAC(prev_mode, current_mode);
                 }
 
@@ -108,3 +111,6 @@ vector<ModeSet> TrackModes(vector<ModeSet> data)
 
     return result;
 }
+
+
+#endif

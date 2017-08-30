@@ -15,6 +15,10 @@
 // Modal Tools
 //
 //==============================================================================
+#ifndef MTK_MODALTOOLS_H
+
+#define MTK_MODALTOOLS_H
+
 
 // system headers
 #include <complex>
@@ -32,23 +36,23 @@ using namespace Eigen;
 
 // Modal Assurance Criterion
 //------------------------------------------------------------------------------
-double ComputeMAC(VectorXcd phi1, VectorXcd phi2)
+inline double ComputeMAC(VectorXcd phi1, VectorXcd phi2)
 {
 	// note: {expression}(0) is used here as a work around to keep datatypes
 	// consistent. This works in this scope, because the results of the
 	// expressions must be a scalar. Thus, calling the first entry just
 	// forces the output as a double.
-    complex<double> mac = pow(abs((phi1.adjoint() * phi2)(0)), 2) / 
-        (phi1.adjoint() * phi1 * phi2.adjoint() * phi2)(0);
+    double mac = (pow(abs((phi1.adjoint() * phi2)(0)), 2) / 
+        (phi1.adjoint() * phi1 * phi2.adjoint() * phi2)(0)).real();
 
-    return mac.real();
+    return mac;
 };
 
 
 
 // Comparison of two mode sets (using MAC)
 //------------------------------------------------------------------------------
-MatrixXd SetsComputeMAC(ModeSet set1, ModeSet set2)
+inline MatrixXd SetsComputeMAC(ModeSet set1, ModeSet set2)
 {
     // preallocate MAC matrix
 	MatrixXd mac;
@@ -58,9 +62,12 @@ MatrixXd SetsComputeMAC(ModeSet set1, ModeSet set2)
     {
         for (int j = 0; j < set2.Size(); ++j)
         {
-            mac(i,j) = ComputeMAC(set1[i].evector, set2[j].evector);
+			mac(i, j) = ComputeMAC(set1[i].evector, set2[j].evector);
         }
     }
 
-	return mac.real();
+	return mac;
 };
+
+
+#endif

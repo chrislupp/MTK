@@ -53,7 +53,7 @@ int main(int arg, char* argv)
 
 	cout << "MAC of complex vectors:" << endl;
     cout << "vc1 with vc1: " << ComputeMAC(vc1,vc1) << endl;
-    cout << "vc1 with vc2: " << ComputeMAC(vc1,vc2) << endl;
+    cout << "vc1 with vc2: " << ComputeMAC(vc1,vc2) << endl << endl;
 
 
 	VectorXd v3(3);
