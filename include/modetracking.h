@@ -50,18 +50,19 @@ vector<ModeSet> TrackModes(vector<ModeSet> data)
         // remove all eigenpairs with negative imaginary part
         if (data[0][i].evalue.imag() >= 0.0)
         {
-            set_temp.AddPair(data[0][i].evalue, data[0][i].evector);
-            result.push_back(set_temp);
+            set_temp.AddPair(data[0][i]);
+            
         }
      }
+	result.push_back(set_temp);
         
-
+	//iterate through every ModeSet
     for (int i = 0; i < data.size() - 1; ++i)
     {
         vector<int> exclude;
 		double mac_temp;
 
-        for (int j = 0; j < result[i-1].Size(); ++j)
+        for (int j = 0; j < result[0].Size(); ++j)
         {
             // best MAC for mode j
             int best_index = 0;

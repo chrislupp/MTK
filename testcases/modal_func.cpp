@@ -31,9 +31,15 @@
 using namespace std;
 
 
-
 int main(int arg, char* argv)
 {
+
+	cout << "     __  ___          __      __   ______            __   __ __ _ __" << endl;
+	cout << "    /  |/  /___  ____/ /___ _/ /  /_  __/___  ____  / /  / //_/(_) /_" << endl;
+	cout << "   / /|_/ / __ \\/ __  / __ `/ /    / / / __ \\/ __ \\/ /  / ,<  / / __/" << endl;
+	cout << "  / /  / / /_/ / /_/ / /_/ / /    / / / /_/ / /_/ / /  / /| |/ / /" << endl;
+	cout << " /_/  /_/\\____/\\__,_/\\__,_/_/    /_/  \\____/\\____/_/  /_/ |_/_/\\__/" << endl << endl;
+
 	cout << endl << "Running test cases of modal functions." << endl << endl;
 
     VectorXd v1(3), v2(3);

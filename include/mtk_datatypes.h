@@ -118,6 +118,29 @@ public:
     {
         return int(pairs.size());
 	};
+
+	VectorXcd OutputEValues()
+	{
+		VectorXcd output(pairs.size());
+		for (int i = 0; i < pairs.size(); i++)
+		{
+			output(i) = pairs[i].evalue;
+		}
+
+		return output;
+	};
+
+	MatrixXcd OutputEVectors()
+	{
+		MatrixXcd output(pairs[0].evector.rows(),pairs.size());
+		for (int i = 0; i < pairs.size(); i++)
+		{
+			output.col(i) = pairs[i].evector;
+		}
+
+		return output;
+	};
+
 };
 
 #endif
