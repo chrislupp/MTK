@@ -67,43 +67,36 @@ int main(int argc, char **argv)
 	vector<ModeSet> real_sets;
 
 	// create seed set
-	ModeSet seed_set;
+	ModeSet seed_set1;
 
 	// read in real eigenvalues and eigenvectors (deformed modal simulation sweep, Al ruler)
 	for (int i = 0; i < 11; i++)
 	{
-		if (i==0)
-		{
-			string fname1 = data_dir + "/modal_results_" + to_string(i) + ".h5";
-			H5::H5File data1(fname1, H5F_ACC_RDONLY);
-			EigenHDF5::load(data1, "/nast_modalsolver/mode_freq", eval);
-			EigenHDF5::load(data1, "/nast_modalsolver/modeshape_eps", evec);
-
-
-			// create the seed set (max 10 modes)
-			for (int j = 0; j < 10; j++)
-			{
-				if (eval(j) >= 0)
-				{
-					seed_set.AddPair(eval(j), evec.col(j));
-				}
-			}
-		}
-
 		string fname1 = data_dir + "/modal_results_" + to_string(i) + ".h5";
 		H5::H5File data1(fname1, H5F_ACC_RDONLY);
 		EigenHDF5::load(data1, "/nast_modalsolver/mode_freq", eval);
 		EigenHDF5::load(data1, "/nast_modalsolver/modeshape_eps", evec);
 
+		if (i==0)
+		{
+			// create the seed set (max 10 modes)
+			for (int j = 0; j < 10; j++)
+			{
+				if (eval(j) >= 0)
+				{
+					seed_set1.AddPair(eval(j), evec.col(j));
+				}
+			}
+		}
+
 		real_sets.push_back(ModeSet(eval, evec));
 	}
-	
 
 
 	// run modetracking and time it
 	cout << "Tracking of real modes:" << endl;
 	auto t1 = std::chrono::high_resolution_clock::now();
-	vector<ModeSet> real_sorted = TrackModes(seed_set, real_sets);
+	vector<ModeSet> real_sorted = TrackModes(seed_set1, real_sets);
 	auto t2 = std::chrono::high_resolution_clock::now();
 
 	std::chrono::duration<double, std::milli> time = t2 - t1;
@@ -129,6 +122,7 @@ int main(int argc, char **argv)
 	VectorXd eval_real, eval_imag;
 	MatrixXd evec_real, evec_imag;
 
+	ModeSet seed_set2;
 	vector<ModeSet> imag_sets;
 
 
@@ -143,13 +137,25 @@ int main(int argc, char **argv)
 		VectorXcd temp_values = eval_real + eval_imag * 1i;
 		MatrixXcd temp_vecs = evec_real + evec_imag * 1i;
 
+		if (i == 0)
+		{
+			// create the seed set (max 10 modes)
+			for (int j = 0; j < 10; j++)
+			{
+				if (temp_values(j).imag() >= 0)
+				{
+					seed_set2.AddPair(temp_values(j), temp_vecs.col(j));
+				}
+			}
+		}
+
 		imag_sets.push_back(ModeSet(temp_values,temp_vecs));
 	}
 
 	// run modetracking and time it
 	cout << "Tracking of complex modes:" << endl;
 	t1 = std::chrono::high_resolution_clock::now();
-	vector<ModeSet> imag_sorted = TrackModes(seed_set, imag_sets);
+	vector<ModeSet> imag_sorted = TrackModes(seed_set2, imag_sets);
 	t2 = std::chrono::high_resolution_clock::now();
 
 	time = t2 - t1;
