@@ -36,33 +36,23 @@ using namespace Eigen;
 
 // Mode Tracking
 //------------------------------------------------------------------------------
-vector<ModeSet> TrackModes(vector<ModeSet> data)
+vector<ModeSet> TrackModes(ModeSet seed, vector<ModeSet> data)
 {
     // results array (of ModeSets)
     vector<ModeSet> result;
+	result.push_back(seed);
 
     // temporary modeset for results
     ModeSet set_temp;
-
-    // sorting of seed mode set
-    for (int i = 0; i < data[0].Size(); ++i)
-     {
-        // remove all eigenpairs with negative imaginary part
-        if (data[0][i].evalue.imag() >= 0.0)
-        {
-            set_temp.AddPair(data[0][i]);
-            
-        }
-     }
-	result.push_back(set_temp);
         
-	//iterate through every ModeSet
+	// iterate through every ModeSet
     for (int i = 0; i < data.size() - 1; ++i)
     {
         vector<int> exclude;
 		double mac_temp;
 
-        for (int j = 0; j < result[0].Size(); ++j)
+		// iterate previous mode
+        for (int j = 0; j < result[i].Size(); ++j)
         {
             // best MAC for mode j
             int best_index = 0;
@@ -71,10 +61,11 @@ vector<ModeSet> TrackModes(vector<ModeSet> data)
             complex<double> best_val = data[i+1][0].evalue;
             VectorXcd best_vec = data[i+1][0].evector;
 
-
             // previous mode
             VectorXcd prev_mode = result[i][j].evector;
 
+
+			// compare to next mode
             for (int k = 0; k < data[i+1].Size(); ++k)
             {
                 if (find(exclude.begin(), exclude.end(), k) != exclude.end())
