@@ -16,7 +16,6 @@
 //
 //==============================================================================
 #ifndef MTK_DATATYPES_H
-
 #define MTK_DATATYPES_H
 
 
@@ -43,17 +42,9 @@ public:
 
     EigenPair(){};
 
-	EigenPair(double eval, VectorXd evec)
-	{
-		evalue = eval + 0i;
-		evector = evec + VectorXd::Zero(evec.size())*1i;
-	};
+	EigenPair(double eval, VectorXd evec);
 
-    EigenPair(complex<double> eval, VectorXcd evec)
-    {
-        evalue = eval;
-        evector = evec;
-	};
+    EigenPair(complex<double> eval, VectorXcd evec);
 
     ~EigenPair(){};
 };
@@ -72,74 +63,29 @@ public:
 	// Constructors and Destructor
 	ModeSet() {};
 
-	ModeSet(VectorXd evals, MatrixXd evecs)
-	{
-		for (int i = 0; i < evals.size(); i++)
-		{
-			AddPair(evals(i), evecs.col(i));
-		}
-	};
+	ModeSet(VectorXd evals, MatrixXd evecs);
 
-	ModeSet(VectorXcd evals, MatrixXcd evecs)
-	{
-		for (int i = 0; i < evals.size(); i++)
-		{
-			AddPair(evals(i), evecs.col(i));
-		}
-	};
+	ModeSet(VectorXcd evals, MatrixXcd evecs);
 
 	~ModeSet() {};
 
 
 	// add eigenpair to modeset
-	void AddPair(double eval, VectorXd evec)
-	{
-		pairs.push_back(EigenPair(eval, evec));
-	};
+	void AddPair(double eval, VectorXd evec);
 
-    void AddPair(complex<double> eval, VectorXcd evec)
-    {
-        pairs.push_back(EigenPair(eval, evec));
-	};
+    void AddPair(complex<double> eval, VectorXcd evec);
 
-	void AddPair(EigenPair input)
-	{
-		pairs.push_back(input);
-	};
+	void AddPair(EigenPair input);
 
 
 	// operators and simple functions
-    EigenPair operator[](int index)
-    {
-        return pairs[index];
-	};
+    EigenPair operator[](int index);
 
-    int Size()
-    {
-        return int(pairs.size());
-	};
+    int Size();
 
-	VectorXcd OutputEValues()
-	{
-		VectorXcd output(pairs.size());
-		for (int i = 0; i < pairs.size(); i++)
-		{
-			output(i) = pairs[i].evalue;
-		}
+	VectorXcd OutputEValues();
 
-		return output;
-	};
-
-	MatrixXcd OutputEVectors()
-	{
-		MatrixXcd output(pairs[0].evector.rows(),pairs.size());
-		for (int i = 0; i < pairs.size(); i++)
-		{
-			output.col(i) = pairs[i].evector;
-		}
-
-		return output;
-	};
+	MatrixXcd OutputEVectors();
 
 };
 
