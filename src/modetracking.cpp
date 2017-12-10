@@ -20,10 +20,13 @@
 #include "modetracking.h"
 
 
-vector<ModeSet> TrackModes(vector<ModeSet> data)
+vector<ModeSet> TrackModes(ModeSet seed, vector<ModeSet> data) 
 {
     // results array (of ModeSets)
     vector<ModeSet> result;
+
+    // add seed set as initial ModeSet
+    result.push_back(seed); 
 
     // temporary modeset for results
     ModeSet set_temp;
@@ -46,7 +49,8 @@ vector<ModeSet> TrackModes(vector<ModeSet> data)
         vector<int> exclude;
         double mac_temp;
 
-        for (int j = 0; j < result[0].Size(); ++j)
+        // iterate previous mode
+        for (int j = 0; j < result[i].Size(); ++j) 
         {
             // best MAC for mode j
             int best_index = 0;
@@ -55,10 +59,10 @@ vector<ModeSet> TrackModes(vector<ModeSet> data)
             complex<double> best_val = data[i+1][0].evalue;
             VectorXcd best_vec = data[i+1][0].evector;
 
-
             // previous mode
             VectorXcd prev_mode = result[i][j].evector;
 
+            // compare to other modes
             for (int k = 0; k < data[i+1].Size(); ++k)
             {
                 if (find(exclude.begin(), exclude.end(), k) != exclude.end())
