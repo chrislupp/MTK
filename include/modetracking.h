@@ -35,6 +35,6 @@ using namespace Eigen;
 
 
 // Mode Tracking (MAC-based)
-vector<ModeSet> TrackModes(vector<ModeSet> data);
+vector<ModeSet> TrackModes(ModeSet seed, vector<ModeSet> data);
 
 #endif
