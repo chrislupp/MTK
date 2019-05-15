@@ -1,5 +1,5 @@
 # set source files for the library
-set(SRC 
+set(SRC
     src/datatypes.cpp
     src/modetracking.cpp
     src/modaltools.cpp
