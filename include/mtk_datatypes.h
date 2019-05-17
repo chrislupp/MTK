@@ -15,8 +15,7 @@
 // Data Types
 //
 //==============================================================================
-#ifndef MTK_DATATYPES_H
-#define MTK_DATATYPES_H
+#pragma once
 
 
 // system headers
@@ -88,5 +87,3 @@ public:
 	MatrixXcd OutputEVectors();
 
 };
-
-#endif

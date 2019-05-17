@@ -15,9 +15,7 @@
 // Modal Tools
 //
 //==============================================================================
-#ifndef MTK_MODALTOOLS_H
-
-#define MTK_MODALTOOLS_H
+#pragma once
 
 
 // system headers
@@ -39,6 +37,3 @@ double ComputeMAC(VectorXcd phi1, VectorXcd phi2);
 
 // Comparison of two mode sets (using MAC)
 MatrixXd SetsComputeMAC(ModeSet set1, ModeSet set2);
-
-
-#endif

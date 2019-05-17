@@ -15,9 +15,7 @@
 // Mode Tracking
 //
 //==============================================================================
-#ifndef MTK_MODETRACKING_H
-
-#define MTK_MODETRACKING_H
+#pragma once
 
 // system headers
 #include <vector>
@@ -36,5 +34,3 @@ using namespace Eigen;
 
 // Mode Tracking (MAC-based)
 vector<ModeSet> TrackModes(ModeSet seed, vector<ModeSet> data);
-
-#endif
