@@ -14,8 +14,8 @@ cdef class EigenPair:
     EigenPair
 
     This class contains an eigenvalue/eigenvector pair and is intended for use
-    within the Modal Toolkit (MTK). Multiple EigenPair instances can be combined
-    together to obtain a ModeSet.
+    within the Modal Tool Kit (MTK). Multiple EigenPair instances can be
+    combined together to obtain a ModeSet.
 
     An EigenPair can be created with or without data on instantiation. If no
     data is assigned upon object instantiation, the eigenvalue/eigenvector can
@@ -36,10 +36,10 @@ cdef class ModeSet:
     vibration analysis. Each mode frequency corresponds to a specific mode shape
     (EigenPair), and the collection of all vibration modes may be seen as the
     ModeSet. The ModeSet datatype was specifically created for the use within
-    the Modal Toolkit (MTK) and enables the easy manipulation of ModeSets using
-    mode tracking, etc.
+    the Modal Tool Kit (MTK) and enables the easy manipulation of sets of
+    modes using mode tracking, etc.
 
-    A ModeSet can be instantiated with and without data. If the object was
+    A ModeSet can be instantiated with or without data. If the object was
     created without data, set functions can be used to populate the eigenvalues
     and eigenvectors. 
     """
