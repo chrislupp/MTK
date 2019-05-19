@@ -135,16 +135,6 @@ set(HEADERS
 add_library(MTK ${SRC} ${HEADERS})
 
 
-# Configure installation
-#-----------------------
-
-# install directories
-set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/MTK/include )
-
-# install files
-install(FILES ${HEADERS} DESTINATION "${INCLUDE_INSTALL_DIR}")
-
-
 # Set up testing
 #---------------
 set(
@@ -157,3 +147,34 @@ if(BUILD_TEST)
     enable_testing()
     add_subdirectory("test")
 endif(BUILD_TEST)
+
+
+
+# Configure installation
+#-----------------------
+
+# install directories
+set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/MTK/include )
+
+# install files
+install(FILES ${HEADERS} DESTINATION "${INCLUDE_INSTALL_DIR}")
+
+
+
+# Cmake Package Configuration
+#----------------------------
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file(cmake/MTKConfig.cmake.in
+  MTKConfig.cmake
+  INSTALL_DESTINATION ${CMAKE_INSTALL_PREFIX}/MTK/cmake
+  PATH_VARS INCLUDE_INSTALL_DIR)
+write_basic_package_version_file(
+  ${CMAKE_CURRENT_BINARY_DIR}/MTKConfigVersion.cmake
+  VERSION ${MTK_VERSION_MAJOR}.${MTK_VERSION_MINOR}.${MTK_VERSION_PATCH}
+  COMPATIBILITY SameMajorVersion )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/MTKConfig.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/MTKConfigVersion.cmake
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/MTK/cmake )
+
+export(PACKAGE MTK)
