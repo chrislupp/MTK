@@ -6,3 +6,5 @@
 \.vscode/ipch/40ec1be2b6ab4551/
 
 *.bin
+
+build/

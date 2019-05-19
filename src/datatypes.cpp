@@ -22,8 +22,8 @@
 
 EigenPair::EigenPair(double eval, VectorXd evec)
 {
-    evalue = eval + 0i;
-    evector = evec + VectorXd::Zero(evec.size())*1i;
+    evalue = complex<double>(eval,0.0);
+    evector = VectorXcd(evec);
 };
 
 
