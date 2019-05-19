@@ -26,7 +26,7 @@ vector<ModeSet> TrackModes(ModeSet seed, vector<ModeSet> data)
     vector<ModeSet> result;
 
     // add seed set as initial ModeSet
-    result.push_back(seed); 
+    result.push_back(seed);
 
     // temporary modeset for results
     ModeSet set_temp;
@@ -43,7 +43,7 @@ vector<ModeSet> TrackModes(ModeSet seed, vector<ModeSet> data)
      }
     result.push_back(set_temp);
         
-    //iterate through every ModeSet
+    // iterate through every ModeSet
     for (int i = 0; i < data.size() - 1; ++i)
     {
         vector<int> exclude;
