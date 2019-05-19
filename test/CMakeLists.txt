@@ -15,5 +15,4 @@
 #
 #===============================================================================
 
-configure_file(python/modules.py modules.py COPYONLY)
-add_test(PythonModule python modules.py)
+configure_file(python/modules.py modules.py COPYONLY)   

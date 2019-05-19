@@ -36,7 +36,6 @@ import eigency
 
 # Numpy/mpi4py must be installed prior to installing UM/NAST
 import numpy
-import mpi4py
 
 # Import distutils
 from setuptools import setup
