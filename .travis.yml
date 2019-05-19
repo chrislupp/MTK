@@ -36,7 +36,7 @@ before_script:
 
 script:
   - make install
-  # - cd install/MTK
-  # - pip install .
-  # - cd ../..
-  # - make test
+  - cd install/MTK
+  - pip install .
+  - cd ../..
+  - make test

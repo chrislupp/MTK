@@ -14,3 +14,5 @@
 # Active Aeroelasticity and Structures Research Lab
 #
 #===============================================================================
+
+configure_file(python/modules.py modules.py COPYONLY)   
