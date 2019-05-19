@@ -13,18 +13,11 @@ from libcpp cimport bool
 from libcpp.vector cimport vector
 from libcpp.string cimport string
 
+# Eigency
+from eigency.core cimport *
 
-# EigenPair (C++)
-cdef extern from "mtk_datatypes.h":
-    cdef cppclass cppEigenPair:
-        cppEigenPair() except +
-
-
-# ModeSet (C++)
-cdef extern from "mtk_datatypes.h":
-    cdef cppclass cppModeSet:
-        cppEigenPair() except +
-
+from cppMTK cimport EigenPair as cppEigenPair
+from cppMTK cimport ModeSet as cppModeSet
 
 
 # EigenPair (wrapper)
@@ -35,3 +28,12 @@ cdef class EigenPair:
 # ModeSet (wrapper)
 cdef class ModeSet:
     cdef cppModeSet *ptr
+
+
+# Modal Functions (wrapper)
+cdef ComputeMAC(phi1, phi2)
+cdef SetsComputeMAC(set1, set2)
+
+
+# Mode Tracking (wrapper)
+cdef TrackModes(seed, data)

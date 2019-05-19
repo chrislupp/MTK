@@ -14,3 +14,29 @@
 # Active Aeroelasticity and Structures Research Lab
 #
 #===============================================================================
+
+
+#-------------------------------------------------------------------------------
+# Install setup for the Python Interface
+#-------------------------------------------------------------------------------
+
+# configure setup.py
+configure_file(setup.py ../setup.py)
+
+
+set(PYMTK_PATH "${CMAKE_SOURCE_DIR}/python")
+set(PYTHON_INTERFACE
+    ${PYMTK_PATH}/MTK.pxd
+    ${PYMTK_PATH}/MTK.pyx
+    ${PYMTK_PATH}/cppMTK.pxd
+)
+
+# set the Python interface file install location
+set(PYTHON_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/MTK/python )
+
+# install cython files
+install(FILES ${PYTHON_INTERFACE} DESTINATION "${PYTHON_INSTALL_DIR}")
+
+# install setup.py
+install(FILES "${CMAKE_BINARY_DIR}/setup.py" DESTINATION
+    "${CMAKE_INSTALL_PREFIX}/MTK/")

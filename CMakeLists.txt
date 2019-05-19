@@ -134,6 +134,14 @@ set(HEADERS
 # create the library
 add_library(MTK ${SRC} ${HEADERS})
 
+set(LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/MTK/lib )
+install(TARGETS MTK DESTINATION "${LIB_INSTALL_DIR}")
+
+
+# Python Interface
+#-----------------
+add_subdirectory(python)
+
 
 # Set up testing
 #---------------

@@ -8,10 +8,21 @@
 
 # distutils: language = c++
 
+from eigency.core cimport *
+
+from cppMTK cimport EigenPair as cppEigenPair
+from cppMTK cimport ModeSet as cppModeSet
+
+from MTK cimport *
+
+
+"""
+Modal Tool Kit
+"""
 
 cdef class EigenPair:
     """
-    EigenPair
+    EigenPair datatype
 
     This class contains an eigenvalue/eigenvector pair and is intended for use
     within the Modal Tool Kit (MTK). Multiple EigenPair instances can be
@@ -29,7 +40,7 @@ cdef class EigenPair:
 
 cdef class ModeSet:
     """
-    ModeSet
+    ModeSet datatype
 
     A ModeSet consists of an array of EigenPairs. An illustrative example to
     describe a ModeSet are the frequency/mode shape combinations of a free
@@ -46,3 +57,24 @@ cdef class ModeSet:
 
     def __cinit__(self, evals=None, evecs=None):
         self.ptr = new cppModeSet()
+
+
+cdef ComputeMAC(phi1, phi2):
+    """
+    Computes the Modal Assurance Criterion (MAC) between two vectors.
+    """
+    return 0.0
+
+
+cdef SetsComputeMAC(set1, set2):
+    """
+    Computes the Modal Assurance Criterion (MAC) between two s.
+    """
+    return 0.0
+
+
+cdef TrackModes(seed, data):
+    """
+    Tracks the modes over a vector of ModeSets from a seed ModeSet.
+    """
+    return 0.0
