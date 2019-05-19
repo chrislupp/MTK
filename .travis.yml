@@ -1,0 +1,42 @@
+language: python
+
+python:
+  - "3.6"
+
+os:
+  - linux
+
+dist: xenial
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - cmake
+    - gcc-8
+    - g++-8
+
+
+before_script:
+  - git clone https://github.com/eigenteam/eigen-git-mirror.git
+  - cd eigen-git-mirror
+  - git checkout 3.3.4
+  - cd ..
+  - export EIGEN3_ROOT=$PWD/eigen-git-mirror
+  - export CC=gcc-8
+  - export CXX=g++-8
+  - mkdir build
+  - cd build
+  - mkdir install
+  - cmake .. -DBUILD_TEST=TRUE -DCMAKE_INSTALL_PREFIX="install"
+  - pip install numpy
+  - pip install cython
+  - pip install eigency
+
+script:
+  - make install
+  # - cd install/MTK
+  # - pip install .
+  # - cd ../..
+  # - make test
