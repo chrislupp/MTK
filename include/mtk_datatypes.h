@@ -108,35 +108,140 @@ private:
 template<typename Type>
 class ModeSet
 {
-private:
-    vector<EigenPair> pairs;
-
 public:
-	// Constructors and Destructor
+	//! \brief Default constructor
 	ModeSet() {};
 
-	ModeSet(VectorXd evals, MatrixXd evecs);
+	/*!
+		\brief Constructor from data
 
-	ModeSet(VectorXcd evals, MatrixXcd evecs);
+		\param eval Eigenvalues (vector)
+		\param evec Eigenvectors (matrix with columns representing the vectors)
+	*/
+	ModeSet(VectorXd evals, MatrixXd evecs)
+	{
+		for (int i = 0; i < evals.size(); i++)
+		{
+			AddPair(evals(i), evecs.col(i));
+		}
+	};
 
+
+	/*!
+		\brief Constructor from data
+
+		\param eval Eigenvalues (vector)
+		\param evec Eigenvectors (matrix with columns representing the vectors)
+	*/
+	ModeSet(VectorXcd evals, MatrixXcd evecs)
+	{
+		for (int i = 0; i < evals.size(); i++)
+		{
+			AddPair(evals(i), evecs.col(i));
+		}
+	};
+
+	//! \brief Destructor
 	~ModeSet() {};
 
 
-	// add eigenpair to modeset
-	void AddPair(double eval, VectorXd evec);
+	/*!
+		\brief Constructor from data
 
-    void AddPair(complex<double> eval, VectorXcd evec);
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+	void AddPair(Type eval, VectorXd evec)
+	{
+		pairs.push_back(EigenPair(eval, evec));
+	};
 
-	void AddPair(EigenPair input);
+
+	/*!
+		\brief Constructor from data
+
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+    void AddPair(complex<Type> eval, VectorXcd evec)
+	{
+		pairs.push_back(EigenPair(eval, evec));
+	};
 
 
-	// operators and simple functions
-    EigenPair operator[](int index);
+	/*!
+		\brief Constructor from data
 
-    int Size();
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+	void AddPair(EigenPair input)
+	{
+		pairs.push_back(input);
+	};
 
-	VectorXcd OutputEValues();
 
-	MatrixXcd OutputEVectors();
+	/*!
+		\brief Constructor from data
 
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+    EigenPair operator[](int index)
+	{
+		return pairs[index];
+	};
+
+
+	/*!
+		\brief Constructor from data
+
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+    int Size()
+	{
+		return int(pairs.size());
+	};
+
+
+	/*!
+		\brief Constructor from data
+
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+	VectorXcd OutputEValues()
+	{
+		VectorXcd output(pairs.size());
+		for (int i = 0; i < pairs.size(); i++)
+		{
+			output(i) = pairs[i].evalue;
+		}
+
+		return output;
+	};
+
+
+	/*!
+		\brief Constructor from data
+
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+	MatrixXcd OutputEVectors()
+	{
+		MatrixXcd output(pairs[0].evector.rows(),pairs.size());
+		for (int i = 0; i < pairs.size(); i++)
+		{
+			output.col(i) = pairs[i].evector;
+		}
+
+		return output;
+	};
+
+
+private:
+	//! \brief Modes (collection of eigenpairs)
+    vector<EigenPair<Type> pairs;
 };
