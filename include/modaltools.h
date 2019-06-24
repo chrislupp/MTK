@@ -35,7 +35,7 @@ using namespace Eigen;
 /*!
     \brief Computes the Modal Assurance Criterion between two vectors
 */
-template<typenam Type>
+template<typename Type>
 Type ComputeMAC(Matrix<std::complex<Type>, Eigen::Dynamic, 1> phi1,
     Matrix<std::complex<Type>, Eigen::Dynamic, 1> phi2)
 {
@@ -53,11 +53,11 @@ Type ComputeMAC(Matrix<std::complex<Type>, Eigen::Dynamic, 1> phi1,
 /*!
     \brief Comparison of two mode sets (using MAC)
 */
-template<typenam Type>
+template<typename Type>
 Matrix<Type, Eigen::Dynamic, Eigen::Dynamic> SetsComputeMAC(ModeSet<Type> set1,
     ModeSet<Type> set2)
 {
-    typedef tMatrix = Matrix<Type, Eigen::Dynamic, Eigen::Dynamic>
+    typedef Matrix<Type, Eigen::Dynamic, Eigen::Dynamic> tMatrix;
 
     // preallocate MAC matrix
     tMatrix mac;
