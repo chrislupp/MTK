@@ -15,19 +15,6 @@
 #
 #===============================================================================
 
-
-#===============================================================================
-#
-# UM/NAST Python Interface
-#
-# Setup Script
-#
-# Author: Christopher A. Lupp
-#
-# This file was adapted from the setup script for TACS (written by G. Kennedy)
-#
-#===============================================================================
-
 import os
 from subprocess import check_output
 import sys
