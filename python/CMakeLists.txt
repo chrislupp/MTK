@@ -40,3 +40,14 @@ install(FILES ${PYTHON_INTERFACE} DESTINATION "${PYTHON_INSTALL_DIR}")
 # install setup.py
 install(FILES "${CMAKE_BINARY_DIR}/setup.py" DESTINATION
     "${CMAKE_INSTALL_PREFIX}/MTK/")
+
+
+# set python auto install flag
+set(PYTHON_AUTO_INSTALL FALSE CACHE BOOL
+    "Automatically install python interface when install target is called")
+
+# install python interface (using pip) if python auto install is set
+if(PYTHON_AUTO_INSTALL)
+    install(CODE "execute_process(COMMAND pip install . 
+        WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/MTK/)")
+endif(PYTHON_AUTO_INSTALL)

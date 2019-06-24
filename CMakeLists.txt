@@ -115,27 +115,12 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(include)
 
 
-# set source files for the library
-set(SRC
-    src/datatypes.cpp
-    src/modetracking.cpp
-    src/modaltools.cpp
-    )
-
-
 # set header files for the library
 set(HEADERS
     include/modaltools.h
     include/modetracking.h
     include/mtk_datatypes.h
     )
-
-
-# create the library
-add_library(MTK ${SRC} ${HEADERS})
-
-set(LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/MTK/lib )
-install(TARGETS MTK EXPORT MTK DESTINATION "${LIB_INSTALL_DIR}")
 
 
 # Python Interface
