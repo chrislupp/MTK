@@ -22,18 +22,18 @@ from cppMTK cimport ModeSet as cppModeSet
 
 # EigenPair (wrapper)
 cdef class EigenPair:
-    cdef cppEigenPair *ptr
+    cdef cppEigenPair[double] *ptr
 
 
 # ModeSet (wrapper)
 cdef class ModeSet:
-    cdef cppModeSet *ptr
+    cdef cppModeSet[double] *ptr
 
 
 # Modal Functions (wrapper)
-cdef ComputeMAC(phi1, phi2)
-cdef SetsComputeMAC(set1, set2)
+# cdef ComputeMAC(phi1, phi2)
+# cdef SetsComputeMAC(set1, set2)
 
 
-# Mode Tracking (wrapper)
-cdef TrackModes(seed, data)
+# # Mode Tracking (wrapper)
+# cdef TrackModes(seed, data)

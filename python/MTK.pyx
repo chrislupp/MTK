@@ -34,7 +34,7 @@ cdef class EigenPair:
     """
 
     def __cinit__(self, eval=None, evec=None):
-        self.ptr = new cppEigenPair()
+        self.ptr = new cppEigenPair[double]()
 
 
 
@@ -56,25 +56,25 @@ cdef class ModeSet:
     """
 
     def __cinit__(self, evals=None, evecs=None):
-        self.ptr = new cppModeSet()
+        self.ptr = new cppModeSet[double]()
 
 
-cdef ComputeMAC(phi1, phi2):
-    """
-    Computes the Modal Assurance Criterion (MAC) between two vectors.
-    """
-    return 0.0
+# cdef ComputeMAC(phi1, phi2):
+#     """
+#     Computes the Modal Assurance Criterion (MAC) between two vectors.
+#     """
+#     return 0.0
 
 
-cdef SetsComputeMAC(set1, set2):
-    """
-    Computes the Modal Assurance Criterion (MAC) between two s.
-    """
-    return 0.0
+# cdef SetsComputeMAC(set1, set2):
+#     """
+#     Computes the Modal Assurance Criterion (MAC) between two s.
+#     """
+#     return 0.0
 
 
-cdef TrackModes(seed, data):
-    """
-    Tracks the modes over a vector of ModeSets from a seed ModeSet.
-    """
-    return 0.0
+# cdef TrackModes(seed, data):
+#     """
+#     Tracks the modes over a vector of ModeSets from a seed ModeSet.
+#     """
+#     return 0.0

@@ -46,7 +46,7 @@ public:
 		\param eval Eigenvalue
 		\param evec Eigenvector
 	*/
-	EigenPair(Type eval, VectorXd evec);
+	EigenPair(Type eval, VectorXd evec)
 	{
 		evalue = complex<Type>(eval,0.0);
 		evector = VectorXcd(evec);
@@ -86,7 +86,7 @@ public:
 
 		\returns Eigenvector
 	*/
-	complex<Type> Evalue()
+	complex<Type> Evector()
 	{
 		return evalue;
 	}
@@ -153,7 +153,7 @@ public:
 	*/
 	void AddPair(Type eval, VectorXd evec)
 	{
-		pairs.push_back(EigenPair(eval, evec));
+		pairs.push_back(EigenPair<Type>(eval, evec));
 	};
 
 
@@ -165,7 +165,7 @@ public:
 	*/
     void AddPair(complex<Type> eval, VectorXcd evec)
 	{
-		pairs.push_back(EigenPair(eval, evec));
+		pairs.push_back(EigenPair<Type>(eval, evec));
 	};
 
 
@@ -175,7 +175,7 @@ public:
 		\param eval Eigenvalue
 		\param evec Eigenvector
 	*/
-	void AddPair(EigenPair input)
+	void AddPair(EigenPair<Type> input)
 	{
 		pairs.push_back(input);
 	};
@@ -187,7 +187,7 @@ public:
 		\param eval Eigenvalue
 		\param evec Eigenvector
 	*/
-    EigenPair operator[](int index)
+    EigenPair<Type> operator[](int index)
 	{
 		return pairs[index];
 	};
@@ -243,5 +243,5 @@ public:
 
 private:
 	//! \brief Modes (collection of eigenpairs)
-    vector<EigenPair<Type> pairs;
+    vector<EigenPair<Type>> pairs;
 };
