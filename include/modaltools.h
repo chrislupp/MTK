@@ -32,8 +32,44 @@ using namespace std;
 using namespace Eigen;
 
 
-// Modal Assurance Criterion
-double ComputeMAC(VectorXcd phi1, VectorXcd phi2);
+/*!
+    \brief Computes the Modal Assurance Criterion between two vectors
+*/
+template<typenam Type>
+Type ComputeMAC(Matrix<std::complex<Type>, Eigen::Dynamic, 1> phi1,
+    Matrix<std::complex<Type>, Eigen::Dynamic, 1> phi2)
+{
+    // note: {expression}(0) is used here as a work around to keep datatypes
+    // consistent. This works in this scope, because the results of the
+    // expressions must be a scalar. Thus, calling the first entry just
+    // forces the output as a double.
+    Type mac = (pow(abs((phi1.adjoint() * phi2)(0)), 2) /
+        (phi1.adjoint() * phi1 * phi2.adjoint() * phi2)(0)).real();
 
-// Comparison of two mode sets (using MAC)
-MatrixXd SetsComputeMAC(ModeSet set1, ModeSet set2);
+    return mac;
+};
+
+
+/*!
+    \brief Comparison of two mode sets (using MAC)
+*/
+template<typenam Type>
+Matrix<Type, Eigen::Dynamic, Eigen::Dynamic> SetsComputeMAC(ModeSet<Type> set1,
+    ModeSet<Type> set2)
+{
+    typedef tMatrix = Matrix<Type, Eigen::Dynamic, Eigen::Dynamic>
+
+    // preallocate MAC matrix
+    tMatrix mac;
+    mac = tMatrix::Zero(set1.Size(), set2.Size());
+
+    for (int i = 0; i < set1.Size(); ++i)
+    {
+        for (int j = 0; j < set2.Size(); ++j)
+        {
+            mac(i, j) = ComputeMAC(set1[i].evector, set2[j].evector);
+        }
+    }
+
+    return mac;
+};
