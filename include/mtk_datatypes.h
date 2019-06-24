@@ -29,30 +29,83 @@ using namespace std;
 using namespace Eigen;
 
 
-// EigenPair
-//------------------------------------------------------------------------------
-// pair of eigenvalue and eigenvector
-//------------------------------------------------------------------------------
+
+/*!
+	\brief EigenPair
+*/
+template<typename Type>
 class EigenPair
 {
 public:
-    complex<double> evalue;
-    VectorXcd evector;
-
+	//! \brief Default constructor
     EigenPair(){};
 
-	EigenPair(double eval, VectorXd evec);
+	/*!
+		\brief Constructor from data
 
-    EigenPair(complex<double> eval, VectorXcd evec);
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+	EigenPair(Type eval, VectorXd evec);
+	{
+		evalue = complex<Type>(eval,0.0);
+		evector = VectorXcd(evec);
+	};
 
+
+	/*!
+		\brief Constructor from data
+
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+    EigenPair(complex<Type> eval, VectorXcd evec)
+	{
+		evalue = eval;
+		evector = evec;
+	};
+
+
+	//! \brief Destructor
     ~EigenPair(){};
+
+
+	/*!
+		\brief Gets the eigenvalue of the eigenpair
+
+		\returns Eigenvalue (scalar)
+	*/
+	complex<Type> Evalue()
+	{
+		return evalue;
+	}
+
+
+	/*!
+		\brief Gets the eigenvector of the eigenpair
+
+		\returns Eigenvector
+	*/
+	complex<Type> Evalue()
+	{
+		return evalue;
+	}
+
+private:
+	//! \brief Eigenvalue
+    complex<Type> evalue;
+
+	//! \brief Eigenvector
+    VectorXcd evector;
 };
 
 
-// ModeSet
-//------------------------------------------------------------------------------
-// set of eigenpairs
-//------------------------------------------------------------------------------
+
+
+/*!
+	\brief ModeSet
+*/
+template<typename Type>
 class ModeSet
 {
 private:
