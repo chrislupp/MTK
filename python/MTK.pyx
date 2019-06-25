@@ -1,28 +1,23 @@
-#===============================================================================
-#
-# MTK Python Interface
-#
-# Author: Christopher A. Lupp
-#
-#===============================================================================
+"""Modal Tool Kit
+"""
 
 # distutils: language = c++
+
 
 from eigency.core cimport *
 
 from cppMTK cimport EigenPair as cppEigenPair
 from cppMTK cimport ModeSet as cppModeSet
+from cppMTK cimport SetsComputeMAC as cppSetsComputeMAC, TrackModes as cppTrackModes
+
 
 from MTK cimport *
 
 
-"""
-Modal Tool Kit
-"""
+
 
 cdef class EigenPair:
-    """
-    EigenPair datatype
+    """EigenPair datatype
 
     This class contains an eigenvalue/eigenvector pair and is intended for use
     within the Modal Tool Kit (MTK). Multiple EigenPair instances can be
@@ -39,8 +34,7 @@ cdef class EigenPair:
 
 
 cdef class ModeSet:
-    """
-    ModeSet datatype
+    """ModeSet datatype
 
     A ModeSet consists of an array of EigenPairs. An illustrative example to
     describe a ModeSet are the frequency/mode shape combinations of a free
@@ -59,22 +53,16 @@ cdef class ModeSet:
         self.ptr = new cppModeSet[double]()
 
 
-# cdef ComputeMAC(phi1, phi2):
+
+# def SetsComputeMAC(ModeSet set1, ModeSet set2):
+#     """Computes the Modal Assurance Criterion (MAC) between two mode sets.
 #     """
-#     Computes the Modal Assurance Criterion (MAC) between two vectors.
-#     """
-#     return 0.0
+#     return ndarray(cppSetsComputeMAC[double](set1.ptr, set2.ptr))
 
 
-# cdef SetsComputeMAC(set1, set2):
+# def TrackModes(seed, data):
+#     """Tracks the modes over a vector of ModeSets from a seed ModeSet.
 #     """
-#     Computes the Modal Assurance Criterion (MAC) between two s.
-#     """
-#     return 0.0
-
-
-# cdef TrackModes(seed, data):
-#     """
-#     Tracks the modes over a vector of ModeSets from a seed ModeSet.
-#     """
-#     return 0.0
+#     modeset = ModeSet()
+#     modeset.ptr = cppTrackModes[double](seed.ptr, data)
+#     return modeset

@@ -28,12 +28,3 @@ cdef class EigenPair:
 # ModeSet (wrapper)
 cdef class ModeSet:
     cdef cppModeSet[double] *ptr
-
-
-# Modal Functions (wrapper)
-# cdef ComputeMAC(phi1, phi2)
-# cdef SetsComputeMAC(set1, set2)
-
-
-# # Mode Tracking (wrapper)
-# cdef TrackModes(seed, data)
