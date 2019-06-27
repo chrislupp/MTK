@@ -9,6 +9,7 @@ from eigency.core cimport *
 from cppMTK cimport EigenPair as cppEigenPair
 from cppMTK cimport ModeSet as cppModeSet
 from cppMTK cimport SetsComputeMAC as cppSetsComputeMAC, TrackModes as cppTrackModes
+cimport cppMTK
 
 
 from MTK cimport *
@@ -50,19 +51,4 @@ cdef class ModeSet:
     """
 
     def __cinit__(self, evals=None, evecs=None):
-        self.ptr = new cppModeSet[double]()
-
-
-
-# def SetsComputeMAC(ModeSet set1, ModeSet set2):
-#     """Computes the Modal Assurance Criterion (MAC) between two mode sets.
-#     """
-#     return ndarray(cppSetsComputeMAC[double](set1.ptr, set2.ptr))
-
-
-# def TrackModes(seed, data):
-#     """Tracks the modes over a vector of ModeSets from a seed ModeSet.
-#     """
-#     modeset = ModeSet()
-#     modeset.ptr = cppTrackModes[double](seed.ptr, data)
-#     return modeset
+        self.ptr = new cppMTK.ModeSet[double]()

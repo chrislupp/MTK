@@ -31,9 +31,9 @@ cdef extern from "mtk_datatypes.h":
 
 # Modal Functions (C++)
 cdef extern from "modaltools.h":
-    cdef MatrixXd SetsComputeMAC[T](ModeSet[T] &set1, ModeSet[T] &set2) except +
+    cdef PlainObjectBase SetsComputeMAC[T](ModeSet[T] &set1, ModeSet[T] &set2)
 
 
 # Mode Tracking (C++)
 cdef extern from "modetracking.h":
-    cdef vector[ModeSet] TrackModes[T](ModeSet[T] seed, vector[ModeSet[T]] data) except +
+    cdef vector[ModeSet] TrackModes[T](ModeSet[T] &seed, vector[ModeSet[T]] &data)
