@@ -71,7 +71,7 @@ else:
 # Relative paths for the include/library directories
 rel_inc_dirs = ['include/']
 rel_lib_dirs = ['lib']
-libs.extend(['MTK'])
+
 
 
 
