@@ -36,6 +36,8 @@ using namespace Eigen;
 template<typename Type>
 class EigenPair
 {
+	typedef Matrix<std::complex<Type>, Dynamic, 1> tVector;
+
 public:
 	//! \brief Default constructor
     EigenPair(){};
@@ -49,7 +51,7 @@ public:
 	EigenPair(Type eval, VectorXd evec)
 	{
 		evalue = complex<Type>(eval,0.0);
-		evector = VectorXcd(evec);
+		evector = tVector(evec);
 	};
 
 
@@ -59,7 +61,7 @@ public:
 		\param eval Eigenvalue
 		\param evec Eigenvector
 	*/
-    EigenPair(complex<Type> eval, VectorXcd evec)
+    EigenPair(complex<Type> eval, tVector evec)
 	{
 		evalue = eval;
 		evector = evec;
@@ -96,7 +98,7 @@ private:
     complex<Type> evalue;
 
 	//! \brief Eigenvector
-    VectorXcd evector;
+    tVector evector;
 };
 
 
@@ -108,6 +110,9 @@ private:
 template<typename Type>
 class ModeSet
 {
+	typedef Matrix<std::complex<Type>, Dynamic, Dynamic> tMatrix;
+	typedef Matrix<std::complex<Type>, Dynamic, 1> tVector;
+
 public:
 	//! \brief Default constructor
 	ModeSet() {};
@@ -133,7 +138,7 @@ public:
 		\param eval Eigenvalues (vector)
 		\param evec Eigenvectors (matrix with columns representing the vectors)
 	*/
-	ModeSet(VectorXcd evals, MatrixXcd evecs)
+	ModeSet(tVector evals, MatrixXcd evecs)
 	{
 		for (int i = 0; i < evals.size(); i++)
 		{
@@ -153,7 +158,7 @@ public:
 	*/
 	void AddPair(Type eval, VectorXd evec)
 	{
-		pairs.push_back(EigenPair<Type>(eval, evec));
+		pairs_.push_back(EigenPair<Type>(eval, evec));
 	};
 
 
@@ -163,9 +168,9 @@ public:
 		\param eval Eigenvalue
 		\param evec Eigenvector
 	*/
-    void AddPair(complex<Type> eval, VectorXcd evec)
+    void AddPair(complex<Type> eval, tVector evec)
 	{
-		pairs.push_back(EigenPair<Type>(eval, evec));
+		pairs_.push_back(EigenPair<Type>(eval, evec));
 	};
 
 
@@ -177,7 +182,7 @@ public:
 	*/
 	void AddPair(EigenPair<Type> input)
 	{
-		pairs.push_back(input);
+		pairs_.push_back(input);
 	};
 
 
@@ -189,7 +194,7 @@ public:
 	*/
     EigenPair<Type> operator[](int index)
 	{
-		return pairs[index];
+		return pairs_[index];
 	};
 
 
@@ -201,7 +206,7 @@ public:
 	*/
     int Size()
 	{
-		return int(pairs.size());
+		return int(pairs_.size());
 	};
 
 
@@ -211,12 +216,12 @@ public:
 		\param eval Eigenvalue
 		\param evec Eigenvector
 	*/
-	VectorXcd OutputEValues()
+	tVector OutputEValues()
 	{
-		VectorXcd output(pairs.size());
-		for (int i = 0; i < pairs.size(); i++)
+		tVector output(pairs_.size());
+		for (int i = 0; i < pairs_.size(); i++)
 		{
-			output(i) = pairs[i].evalue;
+			output(i) = pairs_[i].evalue;
 		}
 
 		return output;
@@ -231,17 +236,75 @@ public:
 	*/
 	MatrixXcd OutputEVectors()
 	{
-		MatrixXcd output(pairs[0].evector.rows(),pairs.size());
-		for (int i = 0; i < pairs.size(); i++)
+		MatrixXcd output(pairs_[0].evector.rows(),pairs_.size());
+		for (int i = 0; i < pairs_.size(); i++)
 		{
-			output.col(i) = pairs[i].evector;
+			output.col(i) = pairs_[i].evector;
 		}
 
 		return output;
 	};
 
 
+
+	/*!
+		\brief Sorts modeset eigenpairs
+
+		This function sorts the eigenpairs by imaginary part in ascending order.
+		By default the negative complex conjugate parts (if the mode set is
+		complex) is discarded, leaving only the positive imaginary parts.
+
+		\param discard_conjugate flag to discard the complex conjugate part if
+		it is negative (default: false).
+	*/
+	void Sort(bool discard_conjugate=false)
+	{
+		
+		
+	}
+
+
+	/*!
+		\brief Deletes a single eigenpair from the mode set
+
+		\param index index of the eigenpair to be discarded 
+	*/
+	void DeleteMode(int index)
+	{
+		pairs_.erase(pairs_.begin() + index);
+	}
+
+
+	/*!
+		\brief Deletes a list of eigenpairs from the mode set
+
+		The individual eigenpairs are deleted in reverse order of the given
+		indices to avoid deleting the wrong 
+
+		\param indices vector of indices of the eigenparis to be discarded 
+	*/
+	void DeleteModes(vector<int> indices)
+	{
+		// set the indices in descending order
+		std::sort(indices.begin(), indices.end());
+		std::reverse(indices.begin(), indices.end());
+
+		// delete all eigenpairs from index (in descending order)
+		for (int const &index: indices)
+			pairs_.erase(pairs_.begin() + index);
+	}
+
+
+	/*!
+		\brief Removes all except for the first N eigenpairs
+	*/
+	void KeepNModes(int n)
+	{
+		pairs_ = vector<EigenPair<Type>>(pairs_.begin(), pairs_.begin() + n + 1);
+	}
+
+
 private:
 	//! \brief Modes (collection of eigenpairs)
-    vector<EigenPair<Type>> pairs;
+    vector<EigenPair<Type>> pairs_;
 };

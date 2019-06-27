@@ -36,7 +36,7 @@ using namespace Eigen;
 template<typename Type>
 vector<ModeSet<Type>> TrackModes(ModeSet<Type> seed, vector<ModeSet<Type>> data)
 {
-    typedef Eigen::Matrix<std::complex<Type>, Eigen::Dynamic, Eigen::Dynamic> complexVector;
+    typedef Matrix<std::complex<Type>, Dynamic, 1> tVector;
 
 
     // results array (of ModeSets)
@@ -74,10 +74,10 @@ vector<ModeSet<Type>> TrackModes(ModeSet<Type> seed, vector<ModeSet<Type>> data)
             Type mac_best = 0.0;
 
             complex<Type> best_val = data[i+1][0].evalue;
-            complexVector best_vec = data[i+1][0].evector;
+            tVector best_vec = data[i+1][0].evector;
 
             // previous mode
-            complexVector prev_mode = result[i][j].evector;
+            tVector prev_mode = result[i][j].evector;
 
             // compare to other modes
             for (int k = 0; k < data[i+1].Size(); ++k)
@@ -88,7 +88,7 @@ vector<ModeSet<Type>> TrackModes(ModeSet<Type> seed, vector<ModeSet<Type>> data)
                 }
                 else
                 {
-                    complexVector current_mode = data[i+1][k].evector;
+                    tVector current_mode = data[i+1][k].evector;
                     mac_temp = ComputeMAC(prev_mode, current_mode);
                 }
 
