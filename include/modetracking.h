@@ -38,7 +38,6 @@ vector<ModeSet<Type>> TrackModes(ModeSet<Type> seed, vector<ModeSet<Type>> data)
 {
     typedef Matrix<std::complex<Type>, Dynamic, 1> tVector;
 
-
     // results array (of ModeSets)
     vector<ModeSet<Type>> result;
 
@@ -48,6 +47,8 @@ vector<ModeSet<Type>> TrackModes(ModeSet<Type> seed, vector<ModeSet<Type>> data)
     // iterate through every ModeSet
     for (int i = 0; i < data.size() - 1; ++i)
     {
+        ModeSet<Type> set_temp;
+
         vector<int> exclude;
         Type mac_temp;
 
