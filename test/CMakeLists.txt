@@ -15,4 +15,7 @@
 #
 #===============================================================================
 
-configure_file(python/modules.py modules.py COPYONLY)   
+configure_file(python/modules.py modules.py COPYONLY)
+
+
+add_subdirectory(cpp)
