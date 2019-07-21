@@ -44,21 +44,6 @@ vector<ModeSet<Type>> TrackModes(ModeSet<Type> seed, vector<ModeSet<Type>> data)
 
     // add seed set as initial ModeSet
     result.push_back(seed);
-
-    // temporary modeset for results
-    ModeSet<Type> set_temp;
-
-    // sorting of seed mode set
-    for (int i = 0; i < data[0].Size(); ++i)
-     {
-        // remove all eigenpairs with negative imaginary part
-        if (data[0][i].evalue.imag() >= 0.0)
-        {
-            set_temp.AddPair(data[0][i]);
-            
-        }
-     }
-    result.push_back(set_temp);
         
     // iterate through every ModeSet
     for (int i = 0; i < data.size() - 1; ++i)
