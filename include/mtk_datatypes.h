@@ -93,12 +93,14 @@ public:
 		return evalue;
 	}
 
-private:
 	//! \brief Eigenvalue
     complex<Type> evalue;
 
 	//! \brief Eigenvector
     tVector evector;
+
+private:
+	
 };
 
 
@@ -246,21 +248,42 @@ public:
 	};
 
 
+	/*!
+		\brief Sorts modeset eigenpairs according to a defined function
+
+		This function sorts the eigenpairs according to a predefined function.
+
+		\param sort_func lambda function used to sort the eigenpairs
+	*/
+	void Sort(std::function<bool (EigenPair<Type>, EigenPair<Type>)> sort_func)
+	{
+		// sort the eigenpairs within the mode set
+		std::sort(pairs_.begin(), pairs_.end(), sort_func);
+	}
+
 
 	/*!
-		\brief Sorts modeset eigenpairs
+		\brief Deletes all modes that do not fulfill the filter function
 
-		This function sorts the eigenpairs by imaginary part in ascending order.
-		By default the negative complex conjugate parts (if the mode set is
-		complex) is discarded, leaving only the positive imaginary parts.
+		\param filter lambda function that defines the filter
 
-		\param discard_conjugate flag to discard the complex conjugate part if
-		it is negative (default: false).
+		\remarks The truth value of the filter function denotes if the filter
+		has been satisfied. This means that a false value results in an
+		exclusion of the mode.
 	*/
-	void Sort(bool discard_conjugate=false)
+	void Filter(std::function<bool (EigenPair<Type>)> filter)
 	{
+		// list of modes to be deleted
+		vector<size_t> list;
 		
+		// find the indices of all modes that violate the filter
+		for (size_t i = 0; i < pairs_.size(); i++)
+			if (!filter(pairs_[i]))
+				list.push_back(i);
 		
+
+		// delete the modes in list
+		DeleteModes(list);
 	}
 
 
@@ -269,7 +292,7 @@ public:
 
 		\param index index of the eigenpair to be discarded 
 	*/
-	void DeleteMode(int index)
+	void DeleteMode(size_t index)
 	{
 		pairs_.erase(pairs_.begin() + index);
 	}
@@ -279,28 +302,33 @@ public:
 		\brief Deletes a list of eigenpairs from the mode set
 
 		The individual eigenpairs are deleted in reverse order of the given
-		indices to avoid deleting the wrong 
+		indices to avoid deleting the wrong mode.
 
 		\param indices vector of indices of the eigenparis to be discarded 
 	*/
-	void DeleteModes(vector<int> indices)
+	void DeleteModes(vector<size_t> indices)
 	{
 		// set the indices in descending order
 		std::sort(indices.begin(), indices.end());
 		std::reverse(indices.begin(), indices.end());
 
 		// delete all eigenpairs from index (in descending order)
-		for (int const &index: indices)
-			pairs_.erase(pairs_.begin() + index);
+		for (size_t const &index: indices)
+			DeleteMode(index);
 	}
 
 
 	/*!
 		\brief Removes all except for the first N eigenpairs
+
+		\remarks The modes removed are the first N modes according to the
+		storage vector. This means that if the modes are not ordered in
+		ascending order the modes removed will be essentially random and not
+		"everything after the first N in magnitude."
 	*/
 	void KeepNModes(int n)
 	{
-		pairs_ = vector<EigenPair<Type>>(pairs_.begin(), pairs_.begin() + n + 1);
+		pairs_ = vector<EigenPair<Type>>(pairs_.begin(), pairs_.begin() + n);
 	}
 
 
