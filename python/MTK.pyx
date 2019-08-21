@@ -75,12 +75,27 @@ cdef class ModeSet:
         self.ptr = new cppMTK.ModeSet[double]()
 
 
-    def __setitem__(self, i, input):
+    def __setitem__(self, i, EigenPair input):
         """Index set operator (operator[]).
         """
-        pass
+        if i > self.ptr.pairs_.size() or self.ptr.pairs_.size() == 0:
+            raise ValueError("Vector of EigenPairs is smaller than index.")
+        else:
+            self.ptr.SetPair(i, input.ptr)
+
 
     def __getitem__(self, i):
         """Index get operator (operator[]).
         """
-        pass
+        if i > self.ptr.pairs_.size() or self.ptr.pairs_.size() == 0:
+            raise ValueError("Vector of EigenPairs is smaller than index.")
+        else:
+            out = EigenPair()
+            out.ptr.SetEigenPair(self.ptr.pairs_[i])
+            return out
+
+
+    def AddPair(self, EigenPair pair):
+        """Adds an EigenPair to the ModeSet.
+        """
+        self.ptr.AddPair(pair.ptr)

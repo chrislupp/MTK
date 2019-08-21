@@ -27,6 +27,8 @@ cdef extern from "mtk_datatypes.h":
 
         PlainObjectBase evector
 
+        void SetEigenPair(const EigenPair[Type] &pair)
+
         void SetEvector(vector[Type] &input)
 
         complex[Type] operator[](int i)
@@ -36,6 +38,13 @@ cdef extern from "mtk_datatypes.h":
 cdef extern from "mtk_datatypes.h":
     cdef cppclass ModeSet[Type]:
         ModeSet() except +
+
+        vector[EigenPair[Type]] pairs_
+
+        void AddPair(EigenPair[Type] &input)
+        void AddPair(EigenPair[Type] *input)
+
+        void SetPair(int i, EigenPair[Type] *input)
 
 
 # Modal Functions (C++)
