@@ -12,6 +12,7 @@
 from libcpp cimport bool
 from libcpp.vector cimport vector
 from libcpp.string cimport string
+from libcpp.complex cimport complex
 
 # Eigency
 from eigency.core cimport *
@@ -19,13 +20,21 @@ from eigency.core cimport *
 
 # EigenPair (C++)
 cdef extern from "mtk_datatypes.h":
-    cdef cppclass EigenPair[T]:
+    cdef cppclass EigenPair[Type]:
         EigenPair() except +
+
+        complex[Type] evalue
+
+        PlainObjectBase evector
+
+        void SetEvector(vector[Type] &input)
+
+        complex[Type] operator[](int i)
 
 
 # ModeSet (C++)
 cdef extern from "mtk_datatypes.h":
-    cdef cppclass ModeSet[T]:
+    cdef cppclass ModeSet[Type]:
         ModeSet() except +
 
 

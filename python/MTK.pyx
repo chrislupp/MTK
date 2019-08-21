@@ -33,6 +33,27 @@ cdef class EigenPair:
         self.ptr = new cppEigenPair[double]()
 
 
+    def __setitem__(self, item, input):
+        """Index set operator (operator[]).
+        """
+        if (item == "evalue"):
+            self.ptr.evalue = input
+        elif(item == "evector"):
+            self.ptr.SetEvector(input)
+        else:
+            raise ValueError("Wrong key during EigenPair assignment")
+
+    def __getitem__(self, item):
+        """Index get operator (operator[]).
+        """
+        if (item == "evalue"):
+            return self.ptr.evalue
+        elif(item == "evector"):
+            return ndarray(self.ptr.evector)
+        else:
+            raise ValueError("Wrong key during EigenPair return")
+
+
 
 cdef class ModeSet:
     """ModeSet datatype
@@ -52,3 +73,14 @@ cdef class ModeSet:
 
     def __cinit__(self, evals=None, evecs=None):
         self.ptr = new cppMTK.ModeSet[double]()
+
+
+    def __setitem__(self, i, input):
+        """Index set operator (operator[]).
+        """
+        pass
+
+    def __getitem__(self, i):
+        """Index get operator (operator[]).
+        """
+        pass
