@@ -103,9 +103,13 @@ cdef class ModeSet:
         """
         self.ptr.AddPair(pair.ptr)
 
-
-
-def MAC(ModeSet set1, ModeSet set2):
+def MAC(EigenPair pair1, EigenPair pair2):
     """Computes the modal assurance criterion between two eigen pairs.
+    """
+    return cppComputeMAC[double](pair1.ptr, pair2.ptr)
+
+
+def SetMAC(ModeSet set1, ModeSet set2):
+    """Computes the modal assurance criterion between two mode sets.
     """
     return ndarray(cppSetsComputeMAC(set1.ptr, set2.ptr))

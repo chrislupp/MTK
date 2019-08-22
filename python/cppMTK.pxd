@@ -51,7 +51,7 @@ cdef extern from "mtk_datatypes.h":
 cdef extern from "modaltools.h":
     cdef PlainObjectBase SetsComputeMAC[T](ModeSet[T] &set1, ModeSet[T] &set2)
 
-    cdef Type ComputeMAC[Type](PlainObjectBase &phi1, PlainObjectBase &phi2)
+    Type ComputeMAC[Type](EigenPair[Type] pair1, EigenPair[Type] pair2)
 
 
 # Mode Tracking (C++)
