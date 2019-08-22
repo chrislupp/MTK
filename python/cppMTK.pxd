@@ -44,12 +44,14 @@ cdef extern from "mtk_datatypes.h":
         void AddPair(EigenPair[Type] &input)
         void AddPair(EigenPair[Type] *input)
 
-        void SetPair(int i, EigenPair[Type] *input)
+        void SetPair(int i, EigenPair[Type] &input)
 
 
 # Modal Functions (C++)
 cdef extern from "modaltools.h":
     cdef PlainObjectBase SetsComputeMAC[T](ModeSet[T] &set1, ModeSet[T] &set2)
+
+    cdef Type ComputeMAC[Type](PlainObjectBase &phi1, PlainObjectBase &phi2)
 
 
 # Mode Tracking (C++)

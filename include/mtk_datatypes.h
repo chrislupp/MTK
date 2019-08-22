@@ -222,9 +222,9 @@ public:
 		\param eval Eigenvalue
 		\param evec Eigenvector
 	*/
-	void SetPair(int i, EigenPair<Type> *input)
+	void SetPair(int i, EigenPair<Type> &input)
 	{
-		pairs_[i] = *input;
+		pairs_[i] = input;
 	};
 
 
