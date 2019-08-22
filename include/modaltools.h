@@ -51,6 +51,16 @@ Type ComputeMAC(Matrix<std::complex<Type>, Eigen::Dynamic, 1> phi1,
 
 
 /*!
+    \brief Computes the Modal Assurance Criterion between two eigen pairs
+*/
+template<typename Type>
+Type ComputeMAC(EigenPair<Type> pair1, EigenPair<Type> pair2)
+{
+    return ComputeMAC(pair1.evector, pair2.evector);
+};
+
+
+/*!
     \brief Comparison of two mode sets (using MAC)
 */
 template<typename Type>

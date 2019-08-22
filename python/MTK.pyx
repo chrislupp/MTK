@@ -8,7 +8,10 @@ from eigency.core cimport *
 
 from cppMTK cimport EigenPair as cppEigenPair
 from cppMTK cimport ModeSet as cppModeSet
-from cppMTK cimport SetsComputeMAC as cppSetsComputeMAC, TrackModes as cppTrackModes
+from cppMTK cimport SetsComputeMAC as cppSetsComputeMAC, \
+    ComputeMAC as cppComputeMAC, \
+    TrackModes as cppTrackModes
+
 cimport cppMTK
 
 
@@ -30,7 +33,28 @@ cdef class EigenPair:
     """
 
     def __cinit__(self, eval=None, evec=None):
-        self.ptr = new cppEigenPair[double]()
+        self.ptr = cppEigenPair[double]()
+
+
+    def __setitem__(self, item, input):
+        """Index set operator (operator[]).
+        """
+        if (item == "evalue"):
+            self.ptr.evalue = input
+        elif(item == "evector"):
+            self.ptr.SetEvector(input)
+        else:
+            raise ValueError("Wrong key during EigenPair assignment")
+
+    def __getitem__(self, item):
+        """Index get operator (operator[]).
+        """
+        if (item == "evalue"):
+            return self.ptr.evalue
+        elif(item == "evector"):
+            return ndarray(self.ptr.evector)
+        else:
+            raise ValueError("Wrong key during EigenPair return")
 
 
 
@@ -51,4 +75,41 @@ cdef class ModeSet:
     """
 
     def __cinit__(self, evals=None, evecs=None):
-        self.ptr = new cppMTK.ModeSet[double]()
+        self.ptr = cppMTK.ModeSet[double]()
+
+
+    def __setitem__(self, i, EigenPair input):
+        """Index set operator (operator[]).
+        """
+        if i > self.ptr.pairs_.size() or self.ptr.pairs_.size() == 0:
+            raise ValueError("Vector of EigenPairs is smaller than index.")
+        else:
+            self.ptr.SetPair(i, input.ptr)
+
+
+    def __getitem__(self, i):
+        """Index get operator (operator[]).
+        """
+        if i > self.ptr.pairs_.size() or self.ptr.pairs_.size() == 0:
+            raise ValueError("Vector of EigenPairs is smaller than index.")
+        else:
+            out = EigenPair()
+            out.ptr.SetEigenPair(self.ptr.pairs_[i])
+            return out
+
+
+    def AddPair(self, EigenPair pair):
+        """Adds an EigenPair to the ModeSet.
+        """
+        self.ptr.AddPair(pair.ptr)
+
+def MAC(EigenPair pair1, EigenPair pair2):
+    """Computes the modal assurance criterion between two eigen pairs.
+    """
+    return cppComputeMAC[double](pair1.ptr, pair2.ptr)
+
+
+def SetMAC(ModeSet set1, ModeSet set2):
+    """Computes the modal assurance criterion between two mode sets.
+    """
+    return ndarray(cppSetsComputeMAC(set1.ptr, set2.ptr))

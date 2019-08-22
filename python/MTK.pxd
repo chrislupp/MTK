@@ -22,9 +22,9 @@ from cppMTK cimport ModeSet as cppModeSet
 
 # EigenPair (wrapper)
 cdef class EigenPair:
-    cdef cppEigenPair[double] *ptr
+    cdef cppEigenPair[double] ptr
 
 
 # ModeSet (wrapper)
 cdef class ModeSet:
-    cdef cppModeSet[double] *ptr
+    cdef cppModeSet[double] ptr

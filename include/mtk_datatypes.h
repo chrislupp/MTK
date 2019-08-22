@@ -71,6 +71,11 @@ public:
 	//! \brief Destructor
     ~EigenPair(){};
 
+    void SetEigenPair(const EigenPair<Type> &pair)
+    {
+        evalue = pair.evalue;
+        evector = pair.evector;
+    }
 
 	/*!
 		\brief Gets the eigenvalue of the eigenpair
@@ -91,6 +96,19 @@ public:
 	complex<Type> Evector()
 	{
 		return evalue;
+	}
+
+    /*!
+		\brief Sets the eigenvector of the eigenpair
+
+		\returns Eigenvector
+	*/
+	void SetEvector(vector<Type> &input)
+	{
+        evector = tVector::Zero(input.size());
+
+        for (size_t i=0; i < input.size(); i++)
+            evector(i) = input[i];
 	}
 
 	//! \brief Eigenvalue
@@ -182,9 +200,31 @@ public:
 		\param eval Eigenvalue
 		\param evec Eigenvector
 	*/
-	void AddPair(EigenPair<Type> input)
+	void AddPair(EigenPair<Type> &input)
 	{
 		pairs_.push_back(input);
+	};
+
+    /*!
+		\brief Constructor from data
+
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+	void AddPair(EigenPair<Type> *input)
+	{
+		pairs_.push_back(*input);
+	};
+
+    /*!
+		\brief Constructor from data
+
+		\param eval Eigenvalue
+		\param evec Eigenvector
+	*/
+	void SetPair(int i, EigenPair<Type> &input)
+	{
+		pairs_[i] = input;
 	};
 
 
@@ -331,8 +371,8 @@ public:
 		pairs_ = vector<EigenPair<Type>>(pairs_.begin(), pairs_.begin() + n);
 	}
 
-
-private:
-	//! \brief Modes (collection of eigenpairs)
+    //! \brief Modes (collection of eigenpairs)
     vector<EigenPair<Type>> pairs_;
+private:
+	
 };
