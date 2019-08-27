@@ -26,13 +26,15 @@ configure_file(setup.py ../setup.py)
 
 set(PYMTK_PATH "${CMAKE_SOURCE_DIR}/python")
 set(PYTHON_INTERFACE
+    ${PYMTK_PATH}/__init__.py
     ${PYMTK_PATH}/MTK.pxd
     ${PYMTK_PATH}/MTK.pyx
-    ${PYMTK_PATH}/cppMTK.pxd
+    ${PYMTK_PATH}/Core.pxd
+    ${PYMTK_PATH}/Core.pyx
 )
 
 # set the Python interface file install location
-set(PYTHON_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/MTK/python )
+set(PYTHON_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/MTK/MTK )
 
 # install cython files
 install(FILES ${PYTHON_INTERFACE} DESTINATION "${PYTHON_INSTALL_DIR}")

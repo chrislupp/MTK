@@ -16,8 +16,8 @@ from libcpp.string cimport string
 # Eigency
 from eigency.core cimport *
 
-from cppMTK cimport EigenPair as cppEigenPair
-from cppMTK cimport ModeSet as cppModeSet
+from MTK.Core cimport EigenPair as cppEigenPair
+from MTK.Core cimport ModeSet as cppModeSet
 
 
 # EigenPair (wrapper)

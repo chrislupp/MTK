@@ -19,14 +19,10 @@ import os
 from subprocess import check_output
 import sys
 import eigency
-
-
-# Numpy/mpi4py must be installed prior to installing UM/NAST
 import numpy
 
-# Import distutils
-from setuptools import setup
-from distutils.core import Extension as Ext
+from setuptools import setup, find_packages
+from setuptools.extension import Extension
 from Cython.Build import cythonize
 
 
@@ -55,8 +51,6 @@ inc_dirs = []
 lib_dirs = []
 libs = []
 
-# inc_dirs, lib_dirs, libs = get_mpi_flags()
-
 
 # find the eigen root directory and add it to the include path
 inc_dirs.append(get_eigen_dir())
@@ -73,32 +67,30 @@ rel_inc_dirs = ['include/']
 rel_lib_dirs = ['lib']
 
 
-
-
-
 # Convert from relative to absolute directories
 inc_dirs.extend(get_global_dir(rel_inc_dirs))
 lib_dirs.extend(get_global_dir(rel_lib_dirs))
 
 
-# Add the numpy/mpi4py directories
-# inc_dirs.extend([numpy.get_include(), mpi4py.get_include()])
-
-
-exts = []
-exts.append(Ext('MTK', sources=['python/MTK.pyx'],
-                    include_dirs=inc_dirs + eigency.get_includes(),
-                    libraries=libs,
-                    library_dirs=lib_dirs,
-                    runtime_library_dirs=runtime_lib_dirs))
+exts = [Extension('MTK.MTK', sources=['MTK/MTK.pyx'],
+            include_dirs=inc_dirs + eigency.get_includes(),
+            libraries=libs,
+            library_dirs=lib_dirs,
+            runtime_library_dirs=runtime_lib_dirs)
+    ]
 
 for e in exts:
     e.cython_directives = {"embedsignature": True,
                            "binding":True}
     
 setup(name='pymtk',
-      version='${MTK_VERSION_MAJOR}.${MTK_VERSION_MINOR}.${MTK_VERSION_PATCH}',
-      description='Modal Tool Kit',
-      author='Christopher A. Lupp',
-      author_email='clupp@umich.edu',
-      ext_modules=cythonize(exts, include_path=inc_dirs))
+    version='${MTK_VERSION_MAJOR}.${MTK_VERSION_MINOR}.${MTK_VERSION_PATCH}',
+    description='Modal Tool Kit',
+    author='Christopher A. Lupp',
+    author_email='clupp@umich.edu',
+    include_package_data=True,
+    packages = find_packages(),
+    package_data = {"MTK": ['*.pxd']},
+    ext_modules=cythonize(exts),
+    install_requires = ['numpy','h5py','eigency','sphinx']
+    )
