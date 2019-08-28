@@ -103,6 +103,14 @@ cdef class ModeSet:
         """
         self.ptr.AddPair(pair.ptr)
 
+
+    def PrintEValues(self):
+        """Prints the mode set eigenvalues.
+        """
+        for i in range(self.ptr.pairs_.size()):
+            print(self.__getitem__(i)["evalue"])
+
+
 def MAC(EigenPair pair1, EigenPair pair2):
     """Computes the modal assurance criterion between two eigen pairs.
     """
