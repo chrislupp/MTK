@@ -44,6 +44,8 @@ cdef extern from "mtk_datatypes.h":
         void AddPair(EigenPair[Type] &input)
         void AddPair(EigenPair[Type] *input)
 
+        int Size()
+
         void SetPair(int i, EigenPair[Type] &input)
 
 

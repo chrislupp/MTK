@@ -103,6 +103,12 @@ cdef class ModeSet:
         """
         self.ptr.AddPair(pair.ptr)
 
+    
+    def Size(self):
+        """Returns the number of modes in the mode set.
+        """
+        return self.ptr.Size()
+
 
     def PrintEValues(self):
         """Prints the mode set eigenvalues.
