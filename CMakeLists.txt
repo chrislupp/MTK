@@ -40,7 +40,7 @@ set_property(
 # Set UM/NAST Version
 #-------------------------------------------------------------------------------
 project(MTK
-        VERSION 2.0.0
+        VERSION 2.2.0
         )
 
 set(REVISION "Revision ${MTK_VERSION_PATCH}")

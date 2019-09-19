@@ -6,16 +6,16 @@
 
 from eigency.core cimport *
 
-from cppMTK cimport EigenPair as cppEigenPair
-from cppMTK cimport ModeSet as cppModeSet
-from cppMTK cimport SetsComputeMAC as cppSetsComputeMAC, \
+from MTK.Core cimport EigenPair as cppEigenPair
+from MTK.Core cimport ModeSet as cppModeSet
+from MTK.Core cimport SetsComputeMAC as cppSetsComputeMAC, \
     ComputeMAC as cppComputeMAC, \
     TrackModes as cppTrackModes
 
-cimport cppMTK
+cimport MTK.Core
 
 
-from MTK cimport *
+# from MTK.MTK cimport *
 
 
 
@@ -75,7 +75,7 @@ cdef class ModeSet:
     """
 
     def __cinit__(self, evals=None, evecs=None):
-        self.ptr = cppMTK.ModeSet[double]()
+        self.ptr = cppModeSet[double]()
 
 
     def __setitem__(self, i, EigenPair input):
@@ -102,6 +102,20 @@ cdef class ModeSet:
         """Adds an EigenPair to the ModeSet.
         """
         self.ptr.AddPair(pair.ptr)
+
+    
+    def Size(self):
+        """Returns the number of modes in the mode set.
+        """
+        return self.ptr.Size()
+
+
+    def PrintEValues(self):
+        """Prints the mode set eigenvalues.
+        """
+        for i in range(self.ptr.pairs_.size()):
+            print(self.__getitem__(i)["evalue"])
+
 
 def MAC(EigenPair pair1, EigenPair pair2):
     """Computes the modal assurance criterion between two eigen pairs.
