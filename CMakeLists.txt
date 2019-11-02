@@ -40,60 +40,18 @@ set_property(
              USE_FOLDERS ON
              )
 
-# Set UM/NAST Version
+# Set MTK Version
 #-------------------------------------------------------------------------------
 project(MTK
-        VERSION 2.2.0
+        VERSION 2.3.0
         )
 
-set(REVISION "Revision ${MTK_VERSION_PATCH}")
-
-
-# ---------- Setup output Directories -------------------------
 set(
-    CMAKE_ARCHIVE_OUTPUT_DIRECTORY
-    ${PROJECT_BINARY_DIR}/lib
+    CMAKE_RUNTIME_OUTPUT_DIRECTORY
+    ${PROJECT_BINARY_DIR}/bin
     CACHE PATH
-    "Single Directory for all Libraries"
-   )
-
-# --------- Setup the Executable output Directory -------------
-set(
-     CMAKE_RUNTIME_OUTPUT_DIRECTORY
-     ${PROJECT_BINARY_DIR}/bin
-     CACHE PATH
-     "Single Directory for all Executables."
-   )
-
-
-
-
-# if macos, search for installed libraries before looking for frameworks
-if(APPLE)
-    set(CMAKE_FIND_FRAMEWORK LAST CACHE STRING "order of macos frameworks")
-endif(APPLE)
-
-
-# C++ Compiler Flags
-#-------------------------------------------------------------------------------
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
-if(COMPILER_SUPPORTS_CXX14)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-else()
-    message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support.
-        Please use a different C++ compiler.")
-endif()
-
-if(UNIX)
-    SET ( CMAKE_C_FLAGS   "-fPIC" CACHE STRING "compile flags" FORCE)
-    SET ( CMAKE_CXX_FLAGS   "-fPIC" CACHE STRING "compile flags" FORCE)
-endif(UNIX)
-
-
-IF(WIN32)
-SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /bigobj")
-ENDIF()
+    "Single Directory for all Executables."
+)
 
 
 # CMake module path
