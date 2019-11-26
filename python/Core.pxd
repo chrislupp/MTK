@@ -68,4 +68,4 @@ cdef extern from "modaltools.h":
 
 # Mode Tracking (C++)
 cdef extern from "modetracking.h":
-    cdef vector[ModeSet] TrackModes[T](ModeSet[T] &seed, vector[ModeSet[T]] &data)
+    cdef vector[ModeSet[T]] TrackModes[T](ModeSet[T] &seed, vector[ModeSet[T]] &data)

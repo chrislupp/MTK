@@ -159,7 +159,7 @@ public:
 		\param eval Eigenvalues (vector)
 		\param evec Eigenvectors (matrix with columns representing the vectors)
 	*/
-	ModeSet(tVector evals, MatrixXcd evecs)
+	ModeSet(tVector evals, tMatrix evecs)
 	{
 		for (int i = 0; i < evals.size(); i++)
 		{

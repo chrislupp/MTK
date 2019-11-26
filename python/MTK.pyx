@@ -113,3 +113,37 @@ def SetMAC(ModeSet set1, ModeSet set2):
     """Computes the modal assurance criterion between two mode sets.
     """
     return ndarray(cppSetsComputeMAC(set1.ptr, set2.ptr))
+
+
+def TrackModes(ModeSet seed, data):
+    """Tracks the modes between an array of ModeSets.
+    
+    Returns:
+        out: progression of mode-tracked modes
+    """
+
+    # array of tracked modes
+    out = []
+
+    # temporary variables
+    temp = np.array(data, dtype=ModeSet)
+    n = len(data)
+    cdef vector[cppModeSet[double]] sequence
+    sequence.resize(n)
+    cdef ModeSet temp2 = ModeSet()
+
+
+    # create a vector of ModeSets (C++)
+    for i in range(n):
+        temp2 = temp[i]
+        sequence[i] = temp2.ptr
+
+    # run the mode tracking
+    tracked = cppTrackModes(seed.ptr, sequence)
+
+    # convert the result to ModeSet types
+    for i in range(n):
+        temp2.ptr = tracked[i]
+        out.append(temp2)
+
+    return out
