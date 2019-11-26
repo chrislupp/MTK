@@ -1,8 +1,25 @@
-"""Modal Tool Kit
+"""
+    Modal Tool Kit (MTK)
+
+    Copyright 2017 Christopher A. Lupp
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 """
 
 # distutils: language = c++
 
+
+from matplotlib.pyplot import *
 
 from eigency.core cimport *
 
@@ -147,3 +164,46 @@ def TrackModes(ModeSet seed, data):
         out.append(temp2)
 
     return out
+
+
+def PlotReal(var, data):
+    """Plots the real mode progression over a variable.
+    """
+    real = []
+
+    for i in range(N_sets):
+        for j in range(N_modes):
+            real[i][j] = data[i][j]
+
+    # plot the data
+    plot(var, real)
+
+
+
+def PlotImag(var, data):
+    """Plots the imaginary mode progression over a variable.
+    """
+    imag = []
+
+    for i in range(N_sets):
+        for j in range(N_modes):
+            imag[i][j] = data[i][j]
+
+    # plot the data
+    plot(var, imag)
+
+
+
+def PlotRootLocus(data):
+    """Plots the root locus of the given data.
+    """
+    real = []
+    imag = []
+    
+    for i in range(N_sets):
+        for j in range(N_modes):
+            real[i][j] = data[i][j]
+            imag[i][j] = data[i][j]
+
+    # plot the data
+    plot(real, imag)
