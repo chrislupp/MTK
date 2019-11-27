@@ -44,8 +44,8 @@ before_script:
   - git checkout 3.3.4
   - cd ..
   - export EIGEN3_ROOT=$PWD/eigen-git-mirror
-  - export CC=gcc-8
-  - export CXX=g++-8
+  - export CC=gcc-9
+  - export CXX=g++-9
   - mkdir build
   - cd build
   - mkdir install
