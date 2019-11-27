@@ -1,8 +1,25 @@
-"""Modal Tool Kit
+"""
+    Modal Tool Kit (MTK)
+
+    Copyright 2017 Christopher A. Lupp
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 """
 
 # distutils: language = c++
 
+
+from matplotlib.pyplot import *
 
 from eigency.core cimport *
 
@@ -103,6 +120,12 @@ cdef class ModeSet:
         """
         self.ptr.AddPair(pair.ptr)
 
+    def Size(self):
+        """Adds an EigenPair to the ModeSet.
+        """
+        return self.ptr.Size()
+
+
 def MAC(EigenPair pair1, EigenPair pair2):
     """Computes the modal assurance criterion between two eigen pairs.
     """
@@ -113,3 +136,105 @@ def SetMAC(ModeSet set1, ModeSet set2):
     """Computes the modal assurance criterion between two mode sets.
     """
     return ndarray(cppSetsComputeMAC(set1.ptr, set2.ptr))
+
+
+def TrackModes(ModeSet seed, data):
+    """Tracks the modes between an array of ModeSets.
+    
+    Returns:
+        out: progression of mode-tracked modes
+    """
+
+    # array of tracked modes
+    out = []
+
+    # temporary variables
+    temp = np.array(data, dtype=ModeSet)
+    n = len(data)
+    cdef vector[cppModeSet[double]] sequence
+    sequence.resize(n)
+    cdef ModeSet temp2 = ModeSet()
+
+
+    # create a vector of ModeSets (C++)
+    for i in range(n):
+        temp2 = temp[i]
+        sequence[i] = temp2.ptr
+
+    # run the mode tracking
+    tracked = cppTrackModes(seed.ptr, sequence)
+
+    # convert the result to ModeSet types
+    for i in range(n):
+        temp2.ptr = tracked[i]
+        out.append(temp2)
+
+    return out
+
+
+def PlotReal(var, data, line=True, sym=True):
+    """Plots the real mode progression over a variable.
+    """
+    N_sets = len(data)
+    N_modes = data[0].Size()
+    real = np.zeros([N_sets, N_modes])
+
+    for i in range(N_sets):
+        for j in range(N_modes):
+            real[i,j] = data[i][j]["evalue"].real
+
+    # plot the data
+    opt = ""
+    if sym:
+        opt += "o"
+    if line:
+        opt += "-"
+
+    plot(var, real, opt)
+
+
+
+def PlotImag(var, data, line=True, sym=True):
+    """Plots the imaginary mode progression over a variable.
+    """
+
+    N_sets = len(data)
+    N_modes = data[0].Size()
+    imag = np.zeros([N_sets, N_modes])
+
+    for i in range(N_sets):
+        for j in range(N_modes):
+            imag[i,j] = data[i][j]["evalue"].imag
+
+    # plot the data
+    opt = ""
+    if sym:
+        opt += "o"
+    if line:
+        opt += "-"
+
+    plot(var, imag, opt)
+
+
+
+def PlotRootLocus(data, line=True, sym=True):
+    """Plots the root locus of the given data.
+    """
+    N_sets = len(data)
+    N_modes = data[0].Size()
+    real = np.zeros([N_sets, N_modes])
+    imag = np.zeros([N_sets, N_modes])
+
+    for i in range(N_sets):
+        for j in range(N_modes):
+            real[i,j] = data[i][j]["evalue"].real
+            imag[i,j] = data[i][j]["evalue"].imag
+
+    # plot the data
+    opt = ""
+    if sym:
+        opt += "o"
+    if line:
+        opt += "-"
+
+    plot(real, imag, opt)
