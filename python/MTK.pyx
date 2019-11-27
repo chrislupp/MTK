@@ -120,6 +120,12 @@ cdef class ModeSet:
         """
         self.ptr.AddPair(pair.ptr)
 
+    def Size(self):
+        """Adds an EigenPair to the ModeSet.
+        """
+        return self.ptr.Size()
+
+
 def MAC(EigenPair pair1, EigenPair pair2):
     """Computes the modal assurance criterion between two eigen pairs.
     """
@@ -169,11 +175,13 @@ def TrackModes(ModeSet seed, data):
 def PlotReal(var, data):
     """Plots the real mode progression over a variable.
     """
-    real = []
+    N_sets = len(data)
+    N_modes = data[0].Size()
+    real = np.zeros([N_sets, N_modes])
 
     for i in range(N_sets):
         for j in range(N_modes):
-            real[i][j] = data[i][j]
+            real[i,j] = data[i][j]["evalue"].real
 
     # plot the data
     plot(var, real)
@@ -183,11 +191,14 @@ def PlotReal(var, data):
 def PlotImag(var, data):
     """Plots the imaginary mode progression over a variable.
     """
-    imag = []
+
+    N_sets = len(data)
+    N_modes = data[0].Size()
+    imag = np.zeros([N_sets, N_modes])
 
     for i in range(N_sets):
         for j in range(N_modes):
-            imag[i][j] = data[i][j]
+            imag[i,j] = data[i][j]["evalue"].imag
 
     # plot the data
     plot(var, imag)
@@ -197,13 +208,15 @@ def PlotImag(var, data):
 def PlotRootLocus(data):
     """Plots the root locus of the given data.
     """
-    real = []
-    imag = []
-    
+    N_sets = len(data)
+    N_modes = data[0].Size()
+    real = np.zeros([N_sets, N_modes])
+    imag = np.zeros([N_sets, N_modes])
+
     for i in range(N_sets):
         for j in range(N_modes):
-            real[i][j] = data[i][j]
-            imag[i][j] = data[i][j]
+            real[i,j] = data[i][j]["evalue"].real
+            imag[i,j] = data[i][j]["evalue"].imag
 
     # plot the data
     plot(real, imag)
