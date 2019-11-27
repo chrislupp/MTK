@@ -172,7 +172,7 @@ def TrackModes(ModeSet seed, data):
     return out
 
 
-def PlotReal(var, data):
+def PlotReal(var, data, line=True, sym=True):
     """Plots the real mode progression over a variable.
     """
     N_sets = len(data)
@@ -184,11 +184,17 @@ def PlotReal(var, data):
             real[i,j] = data[i][j]["evalue"].real
 
     # plot the data
-    plot(var, real)
+    opt = ""
+    if sym:
+        opt += "o"
+    if line:
+        opt += "-"
+
+    plot(var, real, opt)
 
 
 
-def PlotImag(var, data):
+def PlotImag(var, data, line=True, sym=True):
     """Plots the imaginary mode progression over a variable.
     """
 
@@ -201,11 +207,17 @@ def PlotImag(var, data):
             imag[i,j] = data[i][j]["evalue"].imag
 
     # plot the data
-    plot(var, imag)
+    opt = ""
+    if sym:
+        opt += "o"
+    if line:
+        opt += "-"
+
+    plot(var, imag, opt)
 
 
 
-def PlotRootLocus(data):
+def PlotRootLocus(data, line=True, sym=True):
     """Plots the root locus of the given data.
     """
     N_sets = len(data)
@@ -219,4 +231,10 @@ def PlotRootLocus(data):
             imag[i,j] = data[i][j]["evalue"].imag
 
     # plot the data
-    plot(real, imag)
+    opt = ""
+    if sym:
+        opt += "o"
+    if line:
+        opt += "-"
+
+    plot(real, imag, opt)

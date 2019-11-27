@@ -24,6 +24,6 @@ sets = [set1, set2]
 var = [0.0, 1.0]
 
 # plot the mode sets
-PlotRootLocus(sets)
+PlotRootLocus(sets, line=False)
 
 show()
