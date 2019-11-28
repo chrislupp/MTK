@@ -24,7 +24,7 @@ python:
 
 os:
   - linux
-  - osx
+  # - osx
 
 
 addons:
@@ -35,12 +35,12 @@ addons:
     - cmake
     - gcc-9
     - g++-9
-  homebrew:
-    packages:
-    - cmake
-    - gcc-9
-    - g++-9
-    update: true
+  # homebrew:
+  #   packages:
+  #   - cmake
+  #   - gcc-9
+  #   - g++-9
+  #   update: true
 
 
 before_script:
