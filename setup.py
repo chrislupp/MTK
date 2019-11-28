@@ -32,7 +32,7 @@ from Cython.Build import cythonize
 
 # Convert from local to absolute directories
 #-------------------------------------------
-def get_global_dir(files):
+def GlobalDirectory(files):
     root_dir = os.path.abspath(os.path.dirname(__file__))
     new = []
     for f in files:
@@ -43,7 +43,7 @@ def get_global_dir(files):
 
 # get Eigen includes
 #-------------------
-def get_eigen_dir():
+def GetEigenDirectory():
     # get the Eigen directory from the registered environment variable
     eigen_dir = os.environ['EIGEN3_ROOT']
 
@@ -51,49 +51,34 @@ def get_eigen_dir():
 
 
 inc_dirs = []
-lib_dirs = []
-libs = []
 
 
 # find the eigen root directory and add it to the include path
-inc_dirs.append(get_eigen_dir())
-
-
-# Add runtime directory
-if sys.platform == 'win32':
-    runtime_lib_dirs = []
-else:
-    runtime_lib_dirs = get_global_dir(['lib'])
+inc_dirs.append(GetEigenDirectory())
 
 # Relative paths for the include/library directories
 rel_inc_dirs = ['include/']
-rel_lib_dirs = ['lib']
 
 
 # Convert from relative to absolute directories
-inc_dirs.extend(get_global_dir(rel_inc_dirs))
-lib_dirs.extend(get_global_dir(rel_lib_dirs))
+inc_dirs.extend(GlobalDirectory(rel_inc_dirs))
 
 
 exts = [Extension('MTK.MTK', sources=['MTK/MTK.pyx'],
-            include_dirs=inc_dirs + eigency.get_includes(),
-            libraries=libs,
-            library_dirs=lib_dirs,
-            runtime_library_dirs=runtime_lib_dirs)
+            include_dirs=inc_dirs + eigency.get_includes())
     ]
 
 for e in exts:
-    e.cython_directives = {"embedsignature": True,
-                           "binding":True}
+    e.cython_directives = {"embedsignature": True, "binding":True}
     
 setup(name='pymtk',
-    version='${MTK_VERSION_MAJOR}.${MTK_VERSION_MINOR}.${MTK_VERSION_PATCH}',
+    version='2.3.0',
     description='Modal Tool Kit',
     author='Christopher A. Lupp',
     author_email='clupp@umich.edu',
     include_package_data=True,
     packages = find_packages(),
-    package_data = {"MTK": ['*.pxd']},
+    package_data = {"MTK": ['*.pxd','*.h']},
     ext_modules=cythonize(exts),
-    install_requires = ['numpy','h5py','eigency','sphinx']
+    install_requires = ['numpy','h5py','eigency','sphinx', 'matplotlib']
     )
