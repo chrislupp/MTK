@@ -1,10 +1,8 @@
-#===============================================================================
-#
-# MTK Modetracking (imaginary) tests
-#
-# Author: Christopher A. Lupp
-#
-#===============================================================================
+"""
+    MTK Modetracking (imaginary) tests
+
+    Author: Christopher A. Lupp
+"""
 
 import numpy
 import h5py

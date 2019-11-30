@@ -1,10 +1,8 @@
-#===============================================================================
-#
-# MTK Modetracking (real) tests
-#
-# Author: Christopher A. Lupp
-#
-#===============================================================================
+"""
+    MTK Modetracking (real) tests
+
+    Author: Christopher A. Lupp
+"""
 
 import numpy
 import h5py
