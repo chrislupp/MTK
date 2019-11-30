@@ -149,25 +149,25 @@ def TrackModes(ModeSet seed, data):
     out = []
 
     # temporary variables
-    temp = np.array(data, dtype=ModeSet)
     n = len(data)
     cdef vector[cppModeSet[double]] sequence
     sequence.resize(n)
-    cdef ModeSet temp2 = ModeSet()
+    cdef ModeSet temp
 
 
     # create a vector of ModeSets (C++)
     for i in range(n):
-        temp2 = temp[i]
-        sequence[i] = temp2.ptr
+        temp = data[i]
+        sequence[i] = temp.ptr
 
     # run the mode tracking
     tracked = cppTrackModes(seed.ptr, sequence)
 
     # convert the result to ModeSet types
     for i in range(n):
-        temp2.ptr = tracked[i]
-        out.append(temp2)
+        temp = ModeSet()
+        temp.ptr = tracked[i]
+        out.append(temp)
 
     return out
 
