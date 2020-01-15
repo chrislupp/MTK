@@ -1,7 +1,7 @@
 """
     Modal Tool Kit (MTK)
 
-    Copyright 2017 Christopher A. Lupp
+    Copyright 2017-2020 Christopher A. Lupp
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -124,6 +124,37 @@ cdef class ModeSet:
         """Adds an EigenPair to the ModeSet.
         """
         return self.ptr.Size()
+
+
+cdef class ModeTracker():
+    """Mode tracking class.
+    """
+
+    def __cinit__(self):
+        """
+        """
+        pass
+
+    def __init__(self):
+        """
+        """
+        pass
+
+    
+    @property
+    def seed(self):
+        pass
+
+    @seed.setter
+    def seed(self, seed_):
+        pass
+
+
+    def Track(self):
+        """Tracks the modes.
+        """
+        pass
+
 
 
 def MAC(EigenPair pair1, EigenPair pair2):
