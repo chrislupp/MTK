@@ -71,7 +71,7 @@ exts = [Extension('MTK.MTK', sources=['MTK/MTK.pyx'],
 for e in exts:
     e.cython_directives = {"embedsignature": True, "binding":True}
     
-setup(name='pymtk',
+setup(name='modaltoolkit',
     version='2.3.0',
     description='Modal Tool Kit',
     author='Christopher A. Lupp',
