@@ -58,8 +58,6 @@ cdef extern from "mtk_datatypes.h":
 
         void SetPair(int i, EigenPair[Type] &input)
 
-        int Size()
-
 
 # Modal Functions (C++)
 cdef extern from "modaltools.h":
