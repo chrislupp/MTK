@@ -17,40 +17,26 @@
 #     limitations under the License.
 #
 #===============================================================================
-language: python
 
-python:
-  - "3.6"
+# distutils: language = c++
 
-os:
-  - linux
-  # - osx
+# Cython imports
+from libcpp cimport bool
+from libcpp.vector cimport vector
+from libcpp.string cimport string
 
+# Eigency
+from eigency.core cimport *
 
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - cmake
-    - gcc-9
-    - g++-9
-  # homebrew:
-  #   packages:
-  #   - cmake
-  #   - gcc-9
-  #   - g++-9
-  #   update: true
+from MTK.Core cimport EigenPair as cppEigenPair
+from MTK.Core cimport ModeSet as cppModeSet
 
 
-before_script:
-  - git clone https://github.com/eigenteam/eigen-git-mirror.git
-  - cd eigen-git-mirror
-  - git checkout 3.3.4
-  - export EIGEN3_ROOT=$PWD
-  - cd ..
-  - export CC=gcc-9
-  - export CXX=g++-9
+# EigenPair (wrapper)
+cdef class EigenPair:
+    cdef cppEigenPair[double] ptr
 
-script:
-  - pip install .
+
+# ModeSet (wrapper)
+cdef class ModeSet:
+    cdef cppModeSet[double] ptr

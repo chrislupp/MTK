@@ -17,40 +17,13 @@
 #     limitations under the License.
 #
 #===============================================================================
-language: python
 
-python:
-  - "3.6"
-
-os:
-  - linux
-  # - osx
+from pkg_resources import resource_filename
+import os.path
 
 
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - cmake
-    - gcc-9
-    - g++-9
-  # homebrew:
-  #   packages:
-  #   - cmake
-  #   - gcc-9
-  #   - g++-9
-  #   update: true
-
-
-before_script:
-  - git clone https://github.com/eigenteam/eigen-git-mirror.git
-  - cd eigen-git-mirror
-  - git checkout 3.3.4
-  - export EIGEN3_ROOT=$PWD
-  - cd ..
-  - export CC=gcc-9
-  - export CXX=g++-9
-
-script:
-  - pip install .
+def get_includes():
+    """Returns the include path for MTK.
+    """
+    root = os.path.dirname(__file__)
+    return root[:-3]
