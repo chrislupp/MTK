@@ -25,5 +25,4 @@ import os.path
 def get_includes():
     """Returns the include path for MTK.
     """
-    root = os.path.dirname(__file__)
-    return root[:-3]
+    return os.path.dirname(__file__)

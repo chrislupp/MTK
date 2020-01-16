@@ -39,8 +39,6 @@ def GlobalDirectory(files):
         new.append(os.path.join(root_dir, f))
     return new
 
-
-
 # get Eigen includes
 #-------------------
 def GetEigenDirectory():
@@ -57,7 +55,7 @@ inc_dirs = []
 inc_dirs.append(GetEigenDirectory())
 
 # Relative paths for the include/library directories
-rel_inc_dirs = ['include/']
+rel_inc_dirs = ['MTK/include/']
 
 
 # Convert from relative to absolute directories
@@ -72,13 +70,13 @@ for e in exts:
     e.cython_directives = {"embedsignature": True, "binding":True}
     
 setup(name='modaltoolkit',
-    version='2.3.0',
+    version='3.0.0',
     description='Modal Tool Kit',
     author='Christopher A. Lupp',
     author_email='clupp@umich.edu',
     include_package_data=True,
     packages = find_packages(),
-    package_data = {"MTK": ['*.pxd','*.h']},
+    package_data = {"MTK": ['*.pxd','include/*']},
     ext_modules=cythonize(exts),
     install_requires = ['numpy','h5py','eigency','sphinx', 'matplotlib']
     )
