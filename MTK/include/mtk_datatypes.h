@@ -358,6 +358,19 @@ public:
 			DeleteMode(index);
 	}
 
+    /*!
+		\brief Deletes a list of eigenpairs from the mode set
+
+		The individual eigenpairs are deleted in reverse order of the given
+		indices to avoid deleting the wrong mode.
+
+		\param indices vector of indices of the eigenparis to be discarded 
+	*/
+	void ClearModes()
+	{
+		pairs_.clear();
+	}
+
 
 	/*!
 		\brief Removes all except for the first N eigenpairs

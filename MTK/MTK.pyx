@@ -23,8 +23,9 @@ from matplotlib.pyplot import *
 
 from eigency.core cimport *
 
-from MTK.Core cimport EigenPair as cppEigenPair
-from MTK.Core cimport ModeSet as cppModeSet
+from MTK.Core cimport EigenPair as cppEigenPair,\
+    ModeSet as cppModeSet,\
+    ModeTracker as cppModeTracker
 from MTK.Core cimport SetsComputeMAC as cppSetsComputeMAC, \
     ComputeMAC as cppComputeMAC, \
     TrackModes as cppTrackModes
@@ -133,7 +134,8 @@ cdef class ModeTracker():
     def __cinit__(self):
         """
         """
-        pass
+        self.ptr = cppModeTracker[double]()
+
 
     def __init__(self):
         """
@@ -143,17 +145,65 @@ cdef class ModeTracker():
     
     @property
     def seed(self):
-        pass
+        cdef ModeSet seed = ModeSet()
+        seed.ptr = self.ptr.GetSeed()
+        return seed
 
     @seed.setter
     def seed(self, seed_):
+        self.SetSeed(seed_.ptr)
+
+
+    @property
+    def data(self):
+        # temporary variables
+        # n = len(data)
+        # cdef vector[cppModeSet[double]] sequence
+        # sequence.resize(n)
+        # cdef ModeSet temp
+
+        # # create a vector of ModeSets (C++)
+        # for i in range(n):
+        #     temp = data[i]
+        #     sequence[i] = temp.ptr
+        pass
+
+    @data.setter
+    def data(self, data_):
+        # temporary variables
+        n = len(data_)
+        cdef vector[cppModeSet[double]] sequence
+        sequence.resize(n)
+        cdef ModeSet temp
+
+        # allocate the C++ vector
+        for i in range(n):
+            temp = data[i]
+            sequence[i] = temp.ptr
+        
+        # set the data variable
+        self.ptr.SetData(sequence)
+
+
+    @property
+    def tracked_data(self):
+        # temporary variables
+        # n = len(data)
+        # cdef vector[cppModeSet[double]] sequence
+        # sequence.resize(n)
+        # cdef ModeSet temp
+
+        # # create a vector of ModeSets (C++)
+        # for i in range(n):
+        #     temp = data[i]
+        #     sequence[i] = temp.ptr
         pass
 
 
     def Track(self):
         """Tracks the modes.
         """
-        pass
+        self.ptr.Track()
 
 
 

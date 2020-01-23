@@ -28,8 +28,8 @@ from libcpp.string cimport string
 # Eigency
 from eigency.core cimport *
 
-from MTK.Core cimport EigenPair as cppEigenPair
-from MTK.Core cimport ModeSet as cppModeSet
+from MTK.Core cimport EigenPair as cppEigenPair, ModeSet as cppModeSet,\
+    ModeTracker as cppModeTracker
 
 
 # EigenPair (wrapper)
@@ -40,3 +40,8 @@ cdef class EigenPair:
 # ModeSet (wrapper)
 cdef class ModeSet:
     cdef cppModeSet[double] ptr
+
+
+# ModeTracker (wrapper)
+cdef class ModeTracker:
+    cdef cppModeTracker[double] ptr

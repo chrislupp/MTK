@@ -37,11 +37,11 @@ cdef extern from "mtk_datatypes.h":
 
         PlainObjectBase evector
 
-        void SetEigenPair(const EigenPair[Type] &pair)
+        void SetEigenPair(const EigenPair[Type] &pair) except +
 
-        void SetEvector(vector[Type] &input)
+        void SetEvector(vector[Type] &input) except +
 
-        complex[Type] operator[](int i)
+        complex[Type] operator[](int i) except +
 
 
 # ModeSet (C++)
@@ -51,21 +51,41 @@ cdef extern from "mtk_datatypes.h":
 
         vector[EigenPair[Type]] pairs_
 
-        void AddPair(EigenPair[Type] &input)
-        void AddPair(EigenPair[Type] *input)
+        void AddPair(EigenPair[Type] &input) except +
+        void AddPair(EigenPair[Type] *input) except +
 
-        void SetPair(int i, EigenPair[Type] &input)
+        void SetPair(int i, EigenPair[Type] &input) except +
 
-        int Size()
+        int Size() except +
 
 
 # Modal Functions (C++)
 cdef extern from "modaltools.h":
-    cdef PlainObjectBase SetsComputeMAC[T](ModeSet[T] &set1, ModeSet[T] &set2)
+    cdef PlainObjectBase SetsComputeMAC[T](ModeSet[T] &set1,\
+        ModeSet[T] &set2)
 
-    Type ComputeMAC[Type](EigenPair[Type] pair1, EigenPair[Type] pair2)
+    Type ComputeMAC[Type](EigenPair[Type] pair1, EigenPair[Type] pair2) except +
+
+
+# Mode Tracking (C++, object-oriented)
+cdef extern from "modetracking.h":
+    cdef cppclass ModeTracker[Type]:
+        ModeTracker() except +
+
+        void SetSeed(ModeSet[Type] seed) except +
+
+        ModeSet[Type] GetSeed() except +
+
+        void SetData(vector[ModeSet[Type]] seed) except +
+
+        ModeSet[Type] GetData() except +
+
+        ModeSet[Type] GetTrackedData() except +
+
+        void Track() except +
 
 
 # Mode Tracking (C++)
 cdef extern from "modetracking.h":
-    cdef vector[ModeSet[T]] TrackModes[T](ModeSet[T] &seed, vector[ModeSet[T]] &data)
+    cdef vector[ModeSet[T]] TrackModes[T](ModeSet[T] &seed,\
+        vector[ModeSet[T]] &data)  except +
