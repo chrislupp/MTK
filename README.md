@@ -1,5 +1,29 @@
 # Modal Tool Kit (MTK)
 
+The Modal Tool Kit (MTK) is a C++/Python library that defines useful datatypes
+for manipulating modal datasets. MTK provides modal comparison tools and a mode
+tracking algorithm that has been applied to flutter problems (including
+geometrical nonlinearities) and deformed modal analyses.
+
+If you find MTK useful and use it in a work, please cite this work:
+
+    @Misc{Lupp2017,
+        author =   {Christopher A. Lupp},
+        title =    {{MTK}: {The} {Modal} {Toolkit}},
+        howpublished = {\url{https://github.com/chrislupp/MTK}},
+        year = {2017--2020}
+    }
+
+    @inproceedings{LuppCesnik2018,
+        address = {Bristol, UK},
+        author = {Lupp, Christopher A and Cesnik, Carlos E S},
+        booktitle = {RAeS 6th Aircraft Structural Design Conference},
+        publisher = {RAeS},
+        title = {{An Efficient Algorithm for Determining Flutter of Geometrically Nonlinearly Deformed Aircraft}},
+        year = {2018}
+    }
+
+
 ## Installation
 
 First, copy the Environment.config.in file and rename it to Environment.config.
