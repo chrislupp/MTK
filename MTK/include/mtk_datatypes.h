@@ -104,7 +104,7 @@ public:
 
 		\returns Eigenvector
 	*/
-	void SetEvector(vector<Type> &input)
+	void SetEvector(vector<complex<Type>> &input)
 	{
         evector = tVector::Zero(input.size());
 

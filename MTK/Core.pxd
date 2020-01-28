@@ -22,7 +22,7 @@
 from libcpp cimport bool
 from libcpp.vector cimport vector
 from libcpp.string cimport string
-from libcpp.complex cimport complex
+from libcpp.complex cimport complex as cppComplex
 
 # Eigency
 from eigency.core cimport *
@@ -33,15 +33,15 @@ cdef extern from "mtk_datatypes.h":
     cdef cppclass EigenPair[Type]:
         EigenPair() except +
 
-        complex[Type] evalue
+        cppComplex[Type] evalue
 
         PlainObjectBase evector
 
         void SetEigenPair(const EigenPair[Type] &pair) except +
 
-        void SetEvector(vector[Type] &input) except +
+        void SetEvector(vector[cppComplex[double]] &input) except +
 
-        complex[Type] operator[](int i) except +
+        cppComplex[Type] operator[](int i) except +
 
 
 # ModeSet (C++)
