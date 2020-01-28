@@ -116,6 +116,16 @@ cdef class ModeSet:
             return out
 
 
+    @property
+    def evalues(self):
+        return ndarray(self.ptr.OutputEValues())
+
+
+    # @property
+    # def evectors(self):
+    #     return ndarray(self.ptr.OutputEVectors())
+
+
     def AddPair(self, EigenPair pair):
         """Adds an EigenPair to the ModeSet.
         """
