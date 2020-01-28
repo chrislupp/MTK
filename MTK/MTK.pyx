@@ -50,8 +50,16 @@ cdef class EigenPair:
     be set later using the corresponding public variables.
     """
 
-    def __cinit__(self, eval=None, evec=None):
+    def __cinit__(self):
         self.ptr = cppEigenPair[double]()
+
+
+    def __init__(self, eval=None, evec=None):
+        if eval:
+            self["evalue"] = eval
+
+        if evec:
+            self.ptr.SetEvector(evec)
 
 
     def __setitem__(self, item, input):
@@ -70,7 +78,7 @@ cdef class EigenPair:
         if (item == "evalue"):
             return self.ptr.evalue
         elif(item == "evector"):
-            return ndarray(self.ptr.evector)
+            return ndarray(self.ptr.evector).flatten()
         else:
             raise ValueError("Wrong key during EigenPair return")
 
