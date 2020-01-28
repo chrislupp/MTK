@@ -10,9 +10,10 @@ Welcome to MTK's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   modal_functions
-   mode_tracking
-   testcases
+    release_notes
+    modal_functions
+    mode_tracking
+    testcases
 
 
 
