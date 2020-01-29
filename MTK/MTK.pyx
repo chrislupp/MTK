@@ -39,7 +39,8 @@ cimport MTK.Core
 
 
 cdef class EigenPair:
-    """EigenPair datatype
+    """
+    EigenPair datatype
 
     This class contains an eigenvalue/eigenvector pair and is intended for use
     within the Modal Tool Kit (MTK). Multiple EigenPair instances can be
@@ -63,7 +64,8 @@ cdef class EigenPair:
 
 
     def __setitem__(self, item, input):
-        """Index set operator (operator[]).
+        """
+        Index set operator (operator[]).
         """
         if (item == "evalue"):
             self.ptr.evalue = input
@@ -73,7 +75,8 @@ cdef class EigenPair:
             raise ValueError("Wrong key during EigenPair assignment")
 
     def __getitem__(self, item):
-        """Index get operator (operator[]).
+        """
+        Index get operator (operator[]).
         """
         if (item == "evalue"):
             return self.ptr.evalue
@@ -82,10 +85,19 @@ cdef class EigenPair:
         else:
             raise ValueError("Wrong key during EigenPair return")
 
+    @property
+    def value(self):
+        return self.ptr.evalue
+
+    @property
+    def vector(self):
+        return ndarray(self.ptr.evector).flatten()
+
 
 
 cdef class ModeSet:
-    """ModeSet datatype
+    """
+    ModeSet datatype
 
     A ModeSet consists of an array of EigenPairs. An illustrative example to
     describe a ModeSet are the frequency/mode shape combinations of a free

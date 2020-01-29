@@ -22,30 +22,38 @@ from MTK.MTK import EigenPair
 
 class CheckEigenPair(unittest.TestCase):
 
-    def test_DefaultEigenPairCreation(self):
+    def test_DefaultCreation(self):
         """
-        Tests the basic instantiation of an EigenPair.
+        Tests the basic creation of an EigenPair.
         """
         a = EigenPair()
 
 
-    def test_AlternateEigenPairCreation(self):
+    def test_AlternateCreation(self):
         """
-        Tests the basic instantiation of an EigenPair with initial values.
+        Tests the basic creation of an EigenPair with initial values.
         """
         a = EigenPair(1.0, [ 0.0, 1.0])
         self.assertTrue(a["evalue"] == 1.0)
         self.assertTrue((a["evector"] == [ 0.0, 1.0 ]).all())
 
 
-    def test_AlternateEigenPairCreationComplex(self):
+    def test_AlternateCreationComplex(self):
         """
-        Tests the basic instantiation of an EigenPair with initial complex
-        values.
+        Tests the basic creation of an EigenPair with initial complex values.
         """
         a = EigenPair(1.0 + 1.0*1j, [ 0.0, 1.0 + 1.0 * 1j])
         self.assertTrue(a["evalue"] == 1.0 + 1*1j)
         self.assertTrue((a["evector"] == [ 0.0, 1.0 + 1.0*1j]).all())
+
+
+    def test_Properties(self):
+        """
+        Tests the evaluation of the evalue and evector properties.
+        """
+        a = EigenPair(1.0 + 1.0*1j, [ 0.0, 1.0 + 1.0 * 1j])
+        self.assertTrue(a.value == 1.0 + 1*1j)
+        self.assertTrue((a.vector == [ 0.0, 1.0 + 1.0*1j]).all())
 
 
 
