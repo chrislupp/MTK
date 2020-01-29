@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/chrislupp/MTK.svg?branch=master)](https://travis-ci.com/chrislupp/MTK)
+
 # Modal Tool Kit (MTK)
 
 The Modal Tool Kit (MTK) is a C++/Python library that defines useful datatypes
