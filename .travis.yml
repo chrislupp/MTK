@@ -56,4 +56,4 @@ before_script:
 script:
   - pip install .
   - cd test
-  - python eigenpair
+  - python eigenpair.py
