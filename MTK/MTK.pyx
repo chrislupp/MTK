@@ -17,10 +17,6 @@
 """
 
 # distutils: language = c++
-
-
-from matplotlib.pyplot import *
-
 from eigency.core cimport *
 
 from MTK.Core cimport EigenPair as cppEigenPair,\
@@ -31,10 +27,6 @@ from MTK.Core cimport SetsComputeMAC as cppSetsComputeMAC, \
     TrackModes as cppTrackModes
 
 cimport MTK.Core
-
-
-# from MTK.MTK cimport *
-
 
 
 
@@ -57,7 +49,7 @@ cdef class EigenPair:
 
     def __init__(self, eval=None, evec=None):
         if eval:
-            self["evalue"] = eval
+            self["value"] = eval
 
         if evec:
             self.ptr.SetEvector(evec)
@@ -67,10 +59,10 @@ cdef class EigenPair:
         """
         Index set operator (operator[]).
         """
-        if (item == "evalue"):
-            self.ptr.evalue = input
-        elif(item == "evector"):
-            self.ptr.SetEvector(input)
+        if (item == "value"):
+            self.value = input
+        elif(item == "vector"):
+            self.vector = input
         else:
             raise ValueError("Wrong key during EigenPair assignment")
 
@@ -78,10 +70,10 @@ cdef class EigenPair:
         """
         Index get operator (operator[]).
         """
-        if (item == "evalue"):
-            return self.ptr.evalue
-        elif(item == "evector"):
-            return ndarray(self.ptr.evector).flatten()
+        if (item == "value"):
+            return self.value
+        elif(item == "vector"):
+            return self.vector
         else:
             raise ValueError("Wrong key during EigenPair return")
 
@@ -89,9 +81,18 @@ cdef class EigenPair:
     def value(self):
         return self.ptr.evalue
 
+    @value.setter
+    def value(self, input):
+        self.ptr.evalue = input
+    
+
     @property
     def vector(self):
         return ndarray(self.ptr.evector).flatten()
+
+    @vector.setter
+    def vector(self, input):
+        self.ptr.SetEvector(input)
 
 
 
@@ -109,15 +110,22 @@ cdef class ModeSet:
 
     A ModeSet can be instantiated with or without data. If the object was
     created without data, set functions can be used to populate the eigenvalues
-    and eigenvectors. 
+    and eigenvectors.
     """
 
-    def __cinit__(self, evals=None, evecs=None):
+    def __cinit__(self):
         self.ptr = cppModeSet[double]()
 
 
+    def __init__(self, evals=None, evecs=None):
+        # assign the eigenpairs from data
+        if evals and evecs:
+            pass
+
+
     def __setitem__(self, i, EigenPair input):
-        """Index set operator (operator[]).
+        """
+        Index set operator (operator[]).
         """
         if i > self.ptr.pairs_.size() or self.ptr.pairs_.size() == 0:
             raise ValueError("Vector of EigenPairs is smaller than index.")
@@ -126,7 +134,8 @@ cdef class ModeSet:
 
 
     def __getitem__(self, i):
-        """Index get operator (operator[]).
+        """
+        Index get operator (operator[]).
         """
         if i > self.ptr.pairs_.size() or self.ptr.pairs_.size() == 0:
             raise ValueError("Vector of EigenPairs is smaller than index.")
@@ -137,28 +146,32 @@ cdef class ModeSet:
 
 
     @property
-    def evalues(self):
-        return ndarray(self.ptr.OutputEValues())
+    def values(self):
+        return ndarray(self.ptr.OutputEValues()).flatten()
 
 
-    # @property
-    # def evectors(self):
-    #     return ndarray(self.ptr.OutputEVectors())
+    @property
+    def vectors(self):
+        return ndarray(self.ptr.OutputEVectors())
 
 
     def AddPair(self, EigenPair pair):
-        """Adds an EigenPair to the ModeSet.
+        """
+        Adds an EigenPair to the ModeSet.
         """
         self.ptr.AddPair(pair.ptr)
 
     def Size(self):
-        """Adds an EigenPair to the ModeSet.
+        """
+        Adds an EigenPair to the ModeSet.
         """
         return self.ptr.Size()
 
 
+
 cdef class ModeTracker():
-    """Mode tracking class.
+    """
+    Mode tracking class.
     """
 
     def __cinit__(self):
@@ -208,7 +221,7 @@ cdef class ModeTracker():
 
         # allocate the C++ vector
         for i in range(n):
-            temp = data[i]
+            temp = data_[i]
             sequence[i] = temp.ptr
         
         # set the data variable
@@ -281,71 +294,3 @@ def TrackModes(ModeSet seed, data):
         out.append(temp)
 
     return out
-
-
-def PlotReal(var, data, line=True, sym=True):
-    """Plots the real mode progression over a variable.
-    """
-    N_sets = len(data)
-    N_modes = data[0].Size()
-    real = np.zeros([N_sets, N_modes])
-
-    for i in range(N_sets):
-        for j in range(N_modes):
-            real[i,j] = data[i][j]["evalue"].real
-
-    # plot the data
-    opt = ""
-    if sym:
-        opt += "o"
-    if line:
-        opt += "-"
-
-    plot(var, real, opt)
-
-
-
-def PlotImag(var, data, line=True, sym=True):
-    """Plots the imaginary mode progression over a variable.
-    """
-
-    N_sets = len(data)
-    N_modes = data[0].Size()
-    imag = np.zeros([N_sets, N_modes])
-
-    for i in range(N_sets):
-        for j in range(N_modes):
-            imag[i,j] = data[i][j]["evalue"].imag
-
-    # plot the data
-    opt = ""
-    if sym:
-        opt += "o"
-    if line:
-        opt += "-"
-
-    plot(var, imag, opt)
-
-
-
-def PlotRootLocus(data, line=True, sym=True):
-    """Plots the root locus of the given data.
-    """
-    N_sets = len(data)
-    N_modes = data[0].Size()
-    real = np.zeros([N_sets, N_modes])
-    imag = np.zeros([N_sets, N_modes])
-
-    for i in range(N_sets):
-        for j in range(N_modes):
-            real[i,j] = data[i][j]["evalue"].real
-            imag[i,j] = data[i][j]["evalue"].imag
-
-    # plot the data
-    opt = ""
-    if sym:
-        opt += "o"
-    if line:
-        opt += "-"
-
-    plot(real, imag, opt)
