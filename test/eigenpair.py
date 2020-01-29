@@ -33,27 +33,27 @@ class CheckEigenPair(unittest.TestCase):
         """
         Tests the basic creation of an EigenPair with initial values.
         """
-        a = EigenPair(1.0, [ 0.0, 1.0])
-        self.assertTrue(a["evalue"] == 1.0)
-        self.assertTrue((a["evector"] == [ 0.0, 1.0 ]).all())
+        a = EigenPair(1.0, [0.0, 1.0])
+        self.assertTrue(a["value"] == 1.0)
+        self.assertTrue((a["vector"] == [0.0, 1.0]).all())
 
 
     def test_AlternateCreationComplex(self):
         """
         Tests the basic creation of an EigenPair with initial complex values.
         """
-        a = EigenPair(1.0 + 1.0*1j, [ 0.0, 1.0 + 1.0 * 1j])
-        self.assertTrue(a["evalue"] == 1.0 + 1*1j)
-        self.assertTrue((a["evector"] == [ 0.0, 1.0 + 1.0*1j]).all())
+        a = EigenPair(1.0 + 1.0*1j, [0.0, 1.0 + 1.0 * 1j])
+        self.assertTrue(a["value"] == 1.0 + 1*1j)
+        self.assertTrue((a["vector"] == [0.0, 1.0 + 1.0*1j]).all())
 
 
     def test_Properties(self):
         """
-        Tests the evaluation of the evalue and evector properties.
+        Tests the evaluation of the value and vector properties.
         """
-        a = EigenPair(1.0 + 1.0*1j, [ 0.0, 1.0 + 1.0 * 1j])
+        a = EigenPair(1.0 + 1.0*1j, [0.0, 1.0 + 1.0 * 1j])
         self.assertTrue(a.value == 1.0 + 1*1j)
-        self.assertTrue((a.vector == [ 0.0, 1.0 + 1.0*1j]).all())
+        self.assertTrue((a.vector == [0.0, 1.0 + 1.0*1j]).all())
 
 
 
