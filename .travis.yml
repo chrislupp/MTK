@@ -57,3 +57,5 @@ script:
   - pip install .
   - cd test
   - python eigenpair.py
+  - python modeset.py
+  # - python modetracking.py
