@@ -42,6 +42,7 @@ class CheckModeSet(unittest.TestCase):
         a.vector = [1.0, 0.0]
         set.AddPair(a)
 
+        # check the values and vectors
         self.assertTrue((set.values == [1.0, 2.0]).all())
         self.assertTrue((set.vectors == [[0.0, 1.0], [1.0, 0.0]]).all())
 
