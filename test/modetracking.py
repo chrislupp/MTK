@@ -84,24 +84,24 @@ class CheckModeTracker(unittest.TestCase):
             # add the mode set to the mode progression
             data += [set,]
 
-            # create the seed set (in this case the first set of modes)
-            seed = data[0]
+        # create the seed set (in this case the first set of modes)
+        seed = data[0]
 
-            # add the data and the seed set to the mode tracker
-            tracker.seed = seed
-            tracker.data = data
+        # add the data and the seed set to the mode tracker
+        tracker.seed = seed
+        tracker.data = data
 
-            # run the mode tracker
-            tracker.Track()
+        # run the mode tracker
+        tracker.Track()
 
-            # obtain the tracked data
-            results = tracker.tracked_data
+        # obtain the tracked data
+        results = tracker.tracked_data
 
-            # check the results compared to the reference data (from file)
-            status = CheckDataFile(results, "deformed_modal/results.csv")
+        # check the results compared to the reference data (from file)
+        status = CheckDataFile(results, "deformed_modal/results.csv")
 
-            # check if the test passed compared to reference data
-            self.assertTrue(status)
+        # check if the test passed compared to reference data
+        self.assertTrue(status)
 
 
     # def test_ModeTrackingImag(self):

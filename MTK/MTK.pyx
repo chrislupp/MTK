@@ -15,8 +15,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 """
-
 # distutils: language = c++
+from numpy import array
 from eigency.core cimport *
 
 from MTK.Core cimport EigenPair as cppEigenPair,\
@@ -232,16 +232,32 @@ cdef class ModeTracker():
     @property
     def tracked_data(self):
         # temporary variables
-        # n = len(data)
-        # cdef vector[cppModeSet[double]] sequence
-        # sequence.resize(n)
-        # cdef ModeSet temp
+        cdef vector[cppModeSet[double]] tracked
+        temp = ModeSet()
 
-        # # create a vector of ModeSets (C++)
-        # for i in range(n):
-        #     temp = data[i]
-        #     sequence[i] = temp.ptr
-        pass
+        # create a vector of ModeSets (C++)
+        tracked = self.ptr.GetTrackedData()
+
+        # assign the output
+        out = []
+
+        for i in range(tracked.size()):
+            temp.ptr = tracked[i]
+            set = ModeSet()
+
+            for j in range(tracked[i].Size()):
+                # copy eigenpair data
+                pair = EigenPair()
+                pair.value = temp[j].value
+                pair.vector = temp[j].vector
+
+                # add the pair to the mode set
+                set.AddPair(pair)
+
+            # save set to output
+            out += [set,]
+
+        return out
 
 
     def Track(self):

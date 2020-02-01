@@ -84,7 +84,7 @@ cdef extern from "modetracking.h":
 
         ModeSet[Type] GetData() except +
 
-        ModeSet[Type] GetTrackedData() except +
+        vector[ModeSet[Type]] GetTrackedData() except +
 
         void Track() except +
 
