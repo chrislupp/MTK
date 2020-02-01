@@ -17,7 +17,7 @@
 """
 import unittest
 
-from MTK.MTK import EigenPair
+from MTK import EigenPair
 
 
 class CheckEigenPair(unittest.TestCase):

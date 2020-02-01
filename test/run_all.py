@@ -16,36 +16,9 @@
     limitations under the License.
 """
 import unittest
-
-from MTK import EigenPair, ModeSet
-
-
-class CheckModeSet(unittest.TestCase):
-
-    def test_DefaultCreation(self):
-        """
-        Tests the basic instantiation of an EigenPair.
-        """
-        a = ModeSet()
-
-
-    def test_Assignment(self):
-        """
-        Tests the basic instantiation of an EigenPair with initial values.
-        """
-        set = ModeSet()
-
-        # assign two different eigenpairs
-        a = EigenPair(1.0, [0.0, 1.0])
-        set.AddPair(a)
-        a.value = 2.0
-        a.vector = [1.0, 0.0]
-        set.AddPair(a)
-
-        # check the values and vectors
-        self.assertTrue((set.values == [1.0, 2.0]).all())
-        self.assertTrue((set.vectors == [[0.0, 1.0], [1.0, 0.0]]).all())
-
+from eigenpair import CheckEigenPair
+from modeset import CheckModeSet
+from modetracking import CheckModeTracker
 
 
 def main():

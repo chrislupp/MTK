@@ -56,6 +56,4 @@ before_script:
 script:
   - pip install .
   - cd test
-  - python eigenpair.py
-  - python modeset.py
-  # - python modetracking.py
+  - python run_all.py
