@@ -194,7 +194,8 @@ cdef class ModeTracker():
 
     @seed.setter
     def seed(self, seed_):
-        self.SetSeed(seed_.ptr)
+        cdef ModeSet temp = seed_
+        self.ptr.SetSeed(temp.ptr)
 
 
     @property
