@@ -17,6 +17,7 @@
 #     limitations under the License.
 #
 #===============================================================================
+from .MTK import EigenPair, ModeSet, ModeTracker
 
 from pkg_resources import resource_filename
 import os.path
