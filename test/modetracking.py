@@ -16,7 +16,7 @@
     limitations under the License.
 """
 import unittest
-from numpy import loadtxt
+from numpy import loadtxt, zeros, array_equal
 from MTK import EigenPair, ModeSet, ModeTracker
 
 
@@ -33,12 +33,6 @@ def LoadData(fname):
     file.close()
 
     return data
-
-
-def CheckDataFile(results, fname):
-    """Checks the results against reference data in a csv file.
-    """
-    return False
 
 
 
@@ -97,8 +91,16 @@ class CheckModeTracker(unittest.TestCase):
         # obtain the tracked data
         results = tracker.tracked_data
 
-        # check the results compared to the reference data (from file)
-        status = CheckDataFile(results, "deformed_modal/results.csv")
+        freq = zeros([10,11])
+        for i,set in enumerate(results):
+            for j in range(set.Size()):
+                freq[j,i] = set[j].value.real
+
+        # load the reference data from file
+        data = LoadData("deformed_modal/results.csv")
+
+        # check if the mode tracked results matches the reference data
+        status = array_equal(freq, data)
 
         # check if the test passed compared to reference data
         self.assertTrue(status)
