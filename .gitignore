@@ -12,3 +12,6 @@ test/.DS_Store
 Environment.config
 
 MTK/MTK.cpp
+
+doc/xml/
+doc/build/
