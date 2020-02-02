@@ -3,18 +3,33 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to MTK's documentation!
-=================================
+The Modal Tool Kit (MTK)
+========================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 2
+    :caption: General:
+    
+    src/general/release_notes
+    src/general/modal_functions
+    src/general/mode_tracking
+    src/general/testcases
 
-    release_notes
-    modal_functions
-    mode_tracking
-    testcases
 
+.. toctree::
+    :maxdepth: 2
+    :caption: Python API:
+    
+    src/PythonApi/eigenpair
+    src/PythonApi/modeset
+
+
+.. toctree::
+    :maxdepth: 2
+    :caption: C++ API:
+    
+    src/CppApi/eigenpair
+    src/CppApi/modeset
 
 
 Indices and tables
