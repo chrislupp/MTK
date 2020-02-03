@@ -22,6 +22,7 @@ The Modal Tool Kit (MTK)
     
     src/PythonApi/eigenpair
     src/PythonApi/modeset
+    src/PythonApi/modetracking
 
 
 .. toctree::
