@@ -8,3 +8,10 @@ build/
 test/.DS_Store
 
 *.pyc
+
+Environment.config
+
+MTK/MTK.cpp
+
+doc/xml/
+doc/build/

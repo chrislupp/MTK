@@ -49,8 +49,11 @@ before_script:
   - git checkout 3.3.4
   - export EIGEN3_ROOT=$PWD
   - cd ..
+  - echo $EIGEN3_ROOT > Environment.config
   - export CC=gcc-9
   - export CXX=g++-9
 
 script:
   - pip install .
+  - cd test
+  - python run_all.py

@@ -104,7 +104,7 @@ public:
 
 		\returns Eigenvector
 	*/
-	void SetEvector(vector<Type> &input)
+	void SetEvector(vector<complex<Type>> &input)
 	{
         evector = tVector::Zero(input.size());
 
@@ -356,6 +356,19 @@ public:
 		// delete all eigenpairs from index (in descending order)
 		for (size_t const &index: indices)
 			DeleteMode(index);
+	}
+
+    /*!
+		\brief Deletes a list of eigenpairs from the mode set
+
+		The individual eigenpairs are deleted in reverse order of the given
+		indices to avoid deleting the wrong mode.
+
+		\param indices vector of indices of the eigenparis to be discarded 
+	*/
+	void ClearModes()
+	{
+		pairs_.clear();
 	}
 
 

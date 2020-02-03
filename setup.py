@@ -40,24 +40,31 @@ def GlobalDirectory(files):
     return new
 
 
-
-# get Eigen includes
-#-------------------
-def GetEigenDirectory():
-    # get the Eigen directory from the registered environment variable
-    eigen_dir = os.environ['EIGEN3_ROOT']
-
-    return eigen_dir
+def ReadConfigFile(fname):
+    """Reads a config file and sets the include directories
+    """
+    f = open(fname, 'r')
+    list = []
+    for line in f:
+        if line[0] == "#":
+            # treat as a commented line
+            pass
+        elif len(line.rstrip()) == 0:
+            # skip empty lines
+            pass
+        else:
+            list += [line.rstrip(),]
+    return list
 
 
 inc_dirs = []
 
 
 # find the eigen root directory and add it to the include path
-inc_dirs.append(GetEigenDirectory())
+inc_dirs = ReadConfigFile("Environment.config")
 
 # Relative paths for the include/library directories
-rel_inc_dirs = ['include/']
+rel_inc_dirs = ['MTK/include/']
 
 
 # Convert from relative to absolute directories
@@ -71,14 +78,14 @@ exts = [Extension('MTK.MTK', sources=['MTK/MTK.pyx'],
 for e in exts:
     e.cython_directives = {"embedsignature": True, "binding":True}
     
-setup(name='pymtk',
-    version='2.3.0',
+setup(name='modaltoolkit',
+    version='3.0.0',
     description='Modal Tool Kit',
     author='Christopher A. Lupp',
     author_email='clupp@umich.edu',
     include_package_data=True,
     packages = find_packages(),
-    package_data = {"MTK": ['*.pxd','*.h']},
+    package_data = {"MTK": ['*.pxd','include/*']},
     ext_modules=cythonize(exts),
     install_requires = ['numpy','h5py','eigency','sphinx', 'matplotlib']
     )

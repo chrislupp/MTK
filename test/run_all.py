@@ -15,36 +15,15 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 """
-
-from MTK.MTK import EigenPair, ModeSet, PlotReal
-
-from numpy import linspace, sin
-from matplotlib.pyplot import show
-
-N_sets = 15
-N_modes = 10
-
-pair = EigenPair()
+import unittest
+from eigenpair import CheckEigenPair
+from modeset import CheckModeSet
+from modetracking import CheckModeTracker
 
 
-sets = []
-
-for i in range(N_sets):
-    set = ModeSet()
-
-    for j in range(N_modes):
-        pair["evalue"] = 0.5 * sin(0.05*(i-10*j))
-        pair["evector"] = [0.0, 0.0]
-
-        set.AddPair(pair)
-
-    sets.append(set)
+def main():
+    unittest.main()
 
 
-
-var = linspace(0.0, 10.0, N_sets)
-
-# plot the mode sets
-PlotReal(var, sets)
-
-show()
+if __name__ == "__main__":
+    main()

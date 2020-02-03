@@ -58,13 +58,13 @@ public:
     ModeSet<Type> GetSeed() { return seed_; };
 
     //! \brief Sets the mode sets array to be tracked
-    void SetData(ModeSet<Type> seed) { seed_ = seed; };
+    void SetData(vector<ModeSet<Type>> data) { data_ = data; };
 
     //! \brief Gets the mode sets array to be tracked
-    ModeSet<Type> GetData() { return seed_; };
+    ModeSet<Type> GetData() { return data_; };
 
     //! \brief Gets the mode sets array to be tracked
-    ModeSet<Type> GetTrackedData() { return tracked_; };
+    vector<ModeSet<Type>> GetTrackedData() { return tracked_; };
 
 
     /*!
