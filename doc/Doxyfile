@@ -1,0 +1,22 @@
+
+PROJECT_NAME = MTK
+
+PROJECT_NUMBER = 3.0.0
+
+# extract private members
+EXTRACT_PRIVATE = YES
+
+# Set input and output directories
+OUTPUT_DIRECTORY = ./
+INPUT = ../MTK/include
+
+
+# remove absolute path from listed file paths
+STRIP_FROM_PATH = ../MTK/include
+
+# generate XML output
+GENERATE_XML = YES
+GENERATE_LATEX = NO
+GENERATE_HTML = NO
+
+XML_OUTPUT= ./xml/

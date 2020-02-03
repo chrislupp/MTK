@@ -172,6 +172,16 @@ cdef class ModeSet:
 cdef class ModeTracker():
     """
     Mode tracking class.
+
+    Example:
+        An example will go here.
+
+    Attributes:
+        seed: Seed mode set used during the mode tracking.
+        data: Raw data (array of mode sets) before mode tracking has been
+            applied.
+        tracked_data: Resulting data (array of mode sets) determined after the
+            mode tracking.
     """
 
     def __cinit__(self):
