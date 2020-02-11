@@ -61,7 +61,7 @@ inc_dirs = []
 
 
 # find the eigen root directory and add it to the include path
-inc_dirs = ReadConfigFile("Environment.config")
+inc_dirs = ReadConfigFile("Includes.config")
 
 # Relative paths for the include/library directories
 rel_inc_dirs = ['MTK/include/']
