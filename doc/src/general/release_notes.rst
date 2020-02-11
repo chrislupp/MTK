@@ -2,6 +2,14 @@ Release Notes
 =============
 
 
+Version 3.0.1
+-------------
+
+Bugfixes:
+    - changed Environment.config to Includes.config for consistency.
+    - changed get_includes to GetIncludeDirectory for consistency.
+
+
 
 Version 3.0.0
 -------------
