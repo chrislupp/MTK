@@ -28,7 +28,7 @@ If you find MTK useful and use it in a work, please cite this work:
 
 ## Installation
 
-First, copy the Environment.config.in file and rename it to Environment.config.
+First, copy the Includes.config.template file and rename it to Includes.config.
 This file is used during the build process to find the proper include
 directories. In the configuration file that you just created, modify the
 following line:
