@@ -2,6 +2,15 @@ Release Notes
 =============
 
 
+Version 3.0.3
+-------------
+
+Bugfixes:
+    - removed redundant Eigen includes (from Eigency). [found and fixed by
+        Bernardo Bahia Monteiro]
+    - added numpy includes.
+
+
 Version 3.0.1
 -------------
 

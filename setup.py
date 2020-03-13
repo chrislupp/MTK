@@ -80,7 +80,7 @@ for e in exts:
     e.cython_directives = {"embedsignature": True, "binding":True}
     
 setup(name='modaltoolkit',
-    version='3.0.0',
+    version='3.0.3',
     description='Modal Tool Kit',
     author='Christopher A. Lupp',
     author_email='clupp@umich.edu',
