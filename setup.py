@@ -69,10 +69,11 @@ rel_inc_dirs = ['MTK/include/']
 
 # Convert from relative to absolute directories
 inc_dirs.extend(GlobalDirectory(rel_inc_dirs))
+inc_dirs.extend([numpy.get_include()])
 
 
 exts = [Extension('MTK.MTK', sources=['MTK/MTK.pyx'],
-            include_dirs=inc_dirs + eigency.get_includes())
+            include_dirs=inc_dirs)
     ]
 
 for e in exts:
