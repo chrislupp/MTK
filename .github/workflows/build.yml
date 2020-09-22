@@ -42,6 +42,7 @@ jobs:
         # git checkout 3.3.4
         export EIGEN3_ROOT=$PWD
         echo $EIGEN3_ROOT
+        ls
     - name: Install Package
       run: |
         echo $EIGEN3_ROOT > Includes.config
