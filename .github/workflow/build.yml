@@ -1,0 +1,54 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Build and Regression Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, ]
+        python-version: [3.6, 3.7, 3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install numpy
+        pip install scipy
+        pip install cython
+        pip install eigency
+    - name: Clone dependencies
+      working-directory: ${{runner.workspace}}
+      run: |
+        git clone https://gitlab.com/libeigen/eigen
+    - name: Prepare Eigen
+      working-directory: ${{runner.workspace}}/eigen
+      run: |
+        # git checkout 3.3.4
+        export EIGEN3_ROOT=$PWD
+    - name: Install Package
+      run: |
+        echo $EIGEN3_ROOT > Includes.config
+        pip install .
+    - name: Install Package
+      run: |
+        pip install .
+    - name: Run Unit Tests
+      run: |
+        cd $GITHUB_WORKSPACE/test
+        python run_all.py
