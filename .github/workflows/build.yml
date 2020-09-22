@@ -42,12 +42,11 @@ jobs:
         # git checkout 3.3.4
         export EIGEN3_ROOT=$PWD
         echo $EIGEN3_ROOT
-        ls
     - name: Install Package
       run: |
+        echo $EIGEN3_ROOT
         echo $EIGEN3_ROOT > Includes.config
         cat Includes.config
-        ls
         pip install .
     - name: Run Unit Tests
       run: |
