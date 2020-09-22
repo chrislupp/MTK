@@ -16,3 +16,5 @@ MTK/MTK.cpp
 doc/xml/
 doc/build/
 Includes.config
+build/
+*.egg-info/
