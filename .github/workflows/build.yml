@@ -35,13 +35,8 @@ jobs:
     - name: Clone dependencies
       working-directory: ${{runner.workspace}}
       run: |
+        cd $GITHUB_WORKSPACE
         git clone https://gitlab.com/libeigen/eigen
-    # - name: Prepare Eigen
-    #   working-directory: ${{runner.workspace}}/eigen
-    #   run: |
-    #     # git checkout 3.3.4
-    #     export EIGEN3_ROOT=$PWD
-    #     echo $EIGEN3_ROOT
     - name: Install Package
       run: |
         echo $GITHUB_WORKSPACE/eigen > Includes.config
