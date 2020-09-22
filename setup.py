@@ -19,8 +19,6 @@
 #===============================================================================
 
 import os
-import sys
-import eigency
 import numpy
 
 from setuptools import setup, find_packages
