@@ -37,16 +37,13 @@ jobs:
       run: |
         git clone https://gitlab.com/libeigen/eigen
     - name: Prepare Eigen
-      working-directory: ${{runner.workspace}}/eigen
       run: |
+        cd $GITHUB_WORKSPACE/test
         # git checkout 3.3.4
         export EIGEN3_ROOT=$PWD
     - name: Install Package
       run: |
         echo $EIGEN3_ROOT > Includes.config
-        pip install .
-    - name: Install Package
-      run: |
         pip install .
     - name: Run Unit Tests
       run: |
