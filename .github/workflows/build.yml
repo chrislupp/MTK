@@ -44,6 +44,7 @@ jobs:
         echo $EIGEN3_ROOT
         ls
     - name: Install Package
+      working-directory: ${{runner.workspace}}
       run: |
         echo $EIGEN3_ROOT > Includes.config
         pip install .
