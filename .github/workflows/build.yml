@@ -38,7 +38,7 @@ jobs:
         git clone https://gitlab.com/libeigen/eigen
     - name: Prepare Eigen
       run: |
-        cd $GITHUB_WORKSPACE/test
+        cd $GITHUB_WORKSPACE/eigen
         # git checkout 3.3.4
         export EIGEN3_ROOT=$PWD
         echo $EIGEN3_ROOT
