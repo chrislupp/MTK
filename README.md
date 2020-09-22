@@ -1,6 +1,8 @@
-[![Build Status](https://travis-ci.com/chrislupp/MTK.svg?branch=master)](https://travis-ci.com/chrislupp/MTK)
+
 
 # Modal Tool Kit (MTK)
+[![Build Status](https://travis-ci.com/chrislupp/MTK.svg?branch=master)](https://travis-ci.com/chrislupp/MTK)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/dddd6c11c65d4066b7ccec9675188171)](https://www.codacy.com/manual/chrislupp/MTK/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=chrislupp/MTK&amp;utm_campaign=Badge_Grade)
 
 The Modal Tool Kit (MTK) is a C++/Python library that defines useful datatypes
 for manipulating modal datasets. MTK provides modal comparison tools and a mode
@@ -21,10 +23,10 @@ If you find MTK useful and use it in a work, please cite this work:
         author = {Lupp, Christopher A and Cesnik, Carlos E S},
         booktitle = {RAeS 6th Aircraft Structural Design Conference},
         publisher = {RAeS},
-        title = {{An Efficient Algorithm for Determining Flutter of Geometrically Nonlinearly Deformed Aircraft}},
+        title = {{An Efficient Algorithm for Determining Flutter of
+            Geometrically Nonlinearly Deformed Aircraft}},
         year = {2018}
     }
-
 
 ## Installation
 
@@ -51,7 +53,6 @@ for example, by calling:
     pip install .
 
 If the command exits successfully, MTK should now be installed on your system.
-
 
 ## License
 
