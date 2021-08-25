@@ -14,7 +14,7 @@ Environment.config
 MTK/MTK.cpp
 
 doc/xml/
-doc/build/
+docs/_build/
 Includes.config
 build/
 *.egg-info/
