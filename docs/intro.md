@@ -14,3 +14,12 @@ e = mc^2
 ```
 
 Check out the content pages bundled with this sample book to see more.
+
+
+```{figure} graphics/modetracking_defmodal.svg
+---
+
+name: deformed-modal
+---
+Mode-tracked modal frequencies as a function of the applied tip force.
+```

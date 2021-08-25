@@ -2,7 +2,7 @@
 
 # Modal Tool Kit (MTK)
 [![Build Status](https://travis-ci.com/chrislupp/MTK.svg?branch=master)](https://travis-ci.com/chrislupp/MTK)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/dddd6c11c65d4066b7ccec9675188171)](https://www.codacy.com/manual/chrislupp/MTK/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=chrislupp/MTK&amp;utm_campaign=Badge_Grade)
+
 
 The Modal Tool Kit (MTK) is a C++/Python library that defines useful datatypes
 for manipulating modal datasets. MTK provides modal comparison tools and a mode
