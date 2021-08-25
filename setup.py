@@ -19,9 +19,6 @@
 #===============================================================================
 
 import os
-from subprocess import check_output
-import sys
-import eigency
 import numpy
 
 from setuptools import setup, find_packages
@@ -78,7 +75,7 @@ exts = [Extension('MTK.MTK', sources=['MTK/MTK.pyx'],
 
 for e in exts:
     e.cython_directives = {"embedsignature": True, "binding":True}
-    
+
 setup(name='modaltoolkit',
     version='3.0.3',
     description='Modal Tool Kit',

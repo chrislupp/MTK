@@ -21,13 +21,26 @@
 
 // system headers
 #include <vector>
+#include <cmath>
+#include <algorithm>
 
 // Eigen headers
 #include <Eigen/Eigen>
 
 
-using namespace std;
-using namespace Eigen;
+using std::complex;
+using std::vector;
+using std::pow;
+using std::find;
+using std::sort;
+using std::reverse;
+
+using Eigen::Matrix;
+using Eigen::VectorXd;
+using Eigen::MatrixXd;
+using Eigen::VectorXcd;
+using Eigen::MatrixXcd;
+using Eigen::Dynamic;
 
 
 
@@ -281,9 +294,7 @@ public:
 	{
 		MatrixXcd output(pairs_[0].evector.rows(),pairs_.size());
 		for (int i = 0; i < pairs_.size(); i++)
-		{
 			output.col(i) = pairs_[i].evector;
-		}
 
 		return output;
 	};
@@ -350,8 +361,8 @@ public:
 	void DeleteModes(vector<size_t> indices)
 	{
 		// set the indices in descending order
-		std::sort(indices.begin(), indices.end());
-		std::reverse(indices.begin(), indices.end());
+		sort(indices.begin(), indices.end());
+		reverse(indices.begin(), indices.end());
 
 		// delete all eigenpairs from index (in descending order)
 		for (size_t const &index: indices)
@@ -371,14 +382,77 @@ public:
 		pairs_.clear();
 	}
 
+    /*
+        \brief Removes all modes with imaginary part smaller than zero
+    */
+    void RemoveConjugates()
+    {
+        // create a list to contain indices of the modes that should be deleted
+        vector<size_t> list;
+
+        for (size_t i = 0; i < pairs_.size(); i++)
+        {
+            // mark a mode for deletion if its imaginary part is smaller than
+            // zero
+            if (pairs_[i].evalue.imag() < Type(0.0))
+                list.push_back(i);
+            else
+                continue;
+        }
+
+        // delete all modes in the list
+        DeleteModes(list);
+    }
+
+    /*!
+        \brief Removes duplicate modes
+
+        This function removes repeated modes from the set. Two modes are
+        determined to be repeated if the imaginary part of their eigenvalues
+        falls within a defined tolerance tolerance. The tolerance prescribes the
+        number of repeated significant digits.
+
+        \remark This operation is inherently expensive, as the method loops
+        through all modes to check if there are duplicates.
+    */
+    void RemoveRepeatedModes(int tol)
+    {
+        // create a list to contain indices of the modes that should be deleted
+        vector<size_t> list;
+
+        for (size_t i = 0; i < pairs_.size(); i++)
+        {
+            for (size_t j = 0; j < pairs_.size(); j++)
+            {
+                // do not compare the mode to itself
+                if (i==j)
+                    continue;
+
+                // check if the number of significant digits has been fulfilled
+                bool repeated = abs(pairs_[i].evalue.imag() -
+                    pairs_[i].evalue.imag()) < pow(0.1, tol)
+                    * max(abs(pairs_[i].evalue.imag()),
+                    * abs(pairs_[i].evalue.imag()));
+
+                // Add the j-th mode to the deletion list, if the list does not
+                // already contain it and it has been determined a duplicate
+                if (repeated && find(list.begin(), list.end(), j) != list.end())
+                    list.push_back(j);
+            }
+        }
+
+        // delete modes in the list
+        DeleteModes(list);
+    }
+
 
 	/*!
-		\brief Removes all except for the first N eigenpairs
+        \brief Removes all except for the first N eigenpairs
 
-		\remarks The modes removed are the first N modes according to the
-		storage vector. This means that if the modes are not ordered in
-		ascending order the modes removed will be essentially random and not
-		"everything after the first N in magnitude."
+        \remarks The modes removed are the first N modes according to the
+        storage vector. This means that if the modes are not ordered in
+        ascending order the modes removed will be essentially random and not
+        "everything after the first N in magnitude."
 	*/
 	void KeepNModes(int n)
 	{
