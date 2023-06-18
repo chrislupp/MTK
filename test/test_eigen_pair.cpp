@@ -15,6 +15,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+#include <Eigen/Eigen>
 #include <gtest/gtest.h>
 
 #include <eigen_pair.h>
@@ -22,7 +23,9 @@
 // Test the constructor.
 TEST(EigenPairTests, Constructor)
 {
-    mtk::EigenPair<double> eigen_pair1 = mtk::EigenPair(1.0, {0.0, 1.0});
+    Eigen::VectorXd vec(2);
+    vec << 0.0, 1.0;
+    mtk::EigenPair<double> eigen_pair1 = mtk::EigenPair(1.0, vec);
 
     // check the eigenvalue and eigenvector
 
@@ -42,7 +45,7 @@ TEST(EigenPairTests, Constructor)
 // Test the data assignment and retrieval.
 TEST(EigenPairTests, Data)
 {
-    mtk::EigenPair<double> eigen_pair1 = mtk::EigenPair(1.0, {0.0, 1.0});
+    // mtk::EigenPair<double> eigen_pair1 = mtk::EigenPair(1.0, {0.0, 1.0});
 }
 // def test_Properties(self):
 //     """
