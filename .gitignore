@@ -1,20 +1,11 @@
 
-\.vscode
+.vscode/
+build/
 
 *.bin
 
-build/
+*.DS_Store
 
-test/.DS_Store
-
-*.pyc
-
-Environment.config
-
-MTK/MTK.cpp
-
-doc/xml/
+docs/xml/
 docs/_build/
-Includes.config
-build/
 *.egg-info/

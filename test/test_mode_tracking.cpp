@@ -17,17 +17,7 @@
 */
 #include <gtest/gtest.h>
 
-// Test the scalar MAC implementation.
-TEST(MACTests, Scalar)
-{
-}
-
-// Test the MAC implementation for EigenPair inputs.
-TEST(MACTests, EigenPair)
-{
-}
-
-// Test the scalar MAC implementation for ModeSet inputs.
-TEST(MACTests, ModeSets)
+// Test the constructor.
+TEST(EigenPairTests, Constructor)
 {
 }
