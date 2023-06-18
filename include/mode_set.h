@@ -47,7 +47,7 @@ namespace mtk
             \param eval Eigenvalues (vector)
             \param evec Eigenvectors (matrix with columns representing the vectors)
         */
-        ModeSet(Eigen::VectorXd evals, Eigen::MatrixXd evecs)
+        ModeSet(const Eigen::VectorXd &evals, const Eigen::MatrixXd &evecs)
         {
             for (int i = 0; i < evals.size(); i++)
             {
@@ -61,7 +61,7 @@ namespace mtk
             \param eval Eigenvalues (vector)
             \param evec Eigenvectors (matrix with columns representing the vectors)
         */
-        ModeSet(tVector evals, tMatrix evecs)
+        ModeSet(const tVector &evals, const tMatrix &evecs)
         {
             for (int i = 0; i < evals.size(); i++)
             {
@@ -78,7 +78,7 @@ namespace mtk
             \param eval Eigenvalue
             \param evec Eigenvector
         */
-        void AddPair(Type eval, Eigen::VectorXd evec)
+        void AddPair(const Type &eval, const Eigen::VectorXd &evec)
         {
             pairs_.push_back(EigenPair<Type>(eval, evec));
         };
@@ -89,7 +89,7 @@ namespace mtk
             \param eval Eigenvalue
             \param evec Eigenvector
         */
-        void AddPair(std::complex<Type> eval, tVector evec)
+        void AddPair(const std::complex<Type> &eval, const tVector &evec)
         {
             pairs_.push_back(EigenPair<Type>(eval, evec));
         };
@@ -100,7 +100,7 @@ namespace mtk
             \param eval Eigenvalue
             \param evec Eigenvector
         */
-        void AddPair(EigenPair<Type> &input)
+        void AddPair(const EigenPair<Type> &input)
         {
             pairs_.push_back(input);
         };
@@ -111,7 +111,7 @@ namespace mtk
             \param eval Eigenvalue
             \param evec Eigenvector
         */
-        void AddPair(EigenPair<Type> *input)
+        void AddPair(mtk::EigenPair<Type> *input)
         {
             pairs_.push_back(*input);
         };
@@ -122,7 +122,7 @@ namespace mtk
             \param eval Eigenvalue
             \param evec Eigenvector
         */
-        void SetPair(int i, EigenPair<Type> &input)
+        void SetPair(const int &i, const mtk::EigenPair<Type> &input)
         {
             pairs_[i] = input;
         };
@@ -133,7 +133,7 @@ namespace mtk
             \param eval Eigenvalue
             \param evec Eigenvector
         */
-        EigenPair<Type> operator[](int index)
+        mtk::EigenPair<Type> operator[](const int &index)
         {
             return pairs_[index];
         };
@@ -144,7 +144,7 @@ namespace mtk
             \param eval Eigenvalue
             \param evec Eigenvector
         */
-        int Size()
+        int Size() const
         {
             return int(pairs_.size());
         };
@@ -155,7 +155,7 @@ namespace mtk
             \param eval Eigenvalue
             \param evec Eigenvector
         */
-        tVector OutputEValues()
+        tVector OutputEValues() const
         {
             tVector output(pairs_.size());
             for (int i = 0; i < pairs_.size(); i++)
@@ -172,7 +172,7 @@ namespace mtk
             \param eval Eigenvalue
             \param evec Eigenvector
         */
-        MatrixXcd OutputEVectors()
+        MatrixXcd OutputEVectors() const
         {
             Eigen::MatrixXcd output(pairs_[0].evector.rows(), pairs_.size());
             for (int i = 0; i < pairs_.size(); i++)
@@ -188,7 +188,7 @@ namespace mtk
 
             \param sort_func lambda function used to sort the eigenpairs
         */
-        void Sort(std::function<bool(EigenPair<Type>, EigenPair<Type>)> sort_func)
+        void Sort(std::function<bool(mtk::EigenPair<Type>, mtk::EigenPair<Type>)> sort_func)
         {
             // sort the eigenpairs within the mode set
             std::sort(pairs_.begin(), pairs_.end(), sort_func);
@@ -203,7 +203,7 @@ namespace mtk
             has been satisfied. This means that a false value results in an
             exclusion of the mode.
         */
-        void Filter(std::function<bool(EigenPair<Type>)> filter)
+        void Filter(std::function<bool(mtk::EigenPair<Type>)> filter)
         {
             // list of modes to be deleted
             std::vector<size_t> list;
@@ -222,7 +222,7 @@ namespace mtk
 
             \param index index of the eigenpair to be discarded
         */
-        void DeleteMode(size_t index)
+        void DeleteMode(const size_t &index)
         {
             pairs_.erase(pairs_.begin() + index);
         }
@@ -235,7 +235,7 @@ namespace mtk
 
             \param indices vector of indices of the eigenparis to be discarded
         */
-        void DeleteModes(std::vector<size_t> indices)
+        void DeleteModes(const std::vector<size_t> &indices)
         {
             // set the indices in descending order
             std::sort(indices.begin(), indices.end());
@@ -292,7 +292,7 @@ namespace mtk
             \remark This operation is inherently expensive, as the method loops
             through all modes to check if there are duplicates.
         */
-        void RemoveRepeatedModes(int tol)
+        void RemoveRepeatedModes(const int &tol)
         {
             // create a list to contain indices of the modes that should be deleted
             std::vector<size_t> list;
@@ -329,13 +329,13 @@ namespace mtk
             ascending order the modes removed will be essentially random and not
             "everything after the first N in magnitude."
         */
-        void KeepNModes(int n)
+        void KeepNModes(const int &n)
         {
-            pairs_ = std::vector<EigenPair<Type>>(pairs_.begin(), pairs_.begin() + n);
+            pairs_ = std::vector<mtk::EigenPair<Type>>(pairs_.begin(), pairs_.begin() + n);
         }
 
     private:
         //! \brief Modes (collection of eigenpairs)
-        std::vector<EigenPair<Type>> pairs_;
+        std::vector<mtk::EigenPair<Type>> pairs_;
     };
 }

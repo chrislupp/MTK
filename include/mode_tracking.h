@@ -29,105 +29,108 @@
 #include "mode_set.h"
 #include "modal_tools.h"
 
-/*!
-    \brief Mode tracking class
-*/
-template <typename Type>
-class ModeTracker
+namespace mtk
 {
-public:
-    // convenient type definition
-    typedef Eigen::Matrix<std::complex<Type>, Eigen::Dynamic, 1> tVector;
-
-    //! \brief Default constructor
-    ModeTracker(){};
-
-    //! \brief Destructor
-    ~ModeTracker(){};
-
-    //! \brief Sets the mode sets array to be tracked
-    void SetData(vector<ModeSet<Type>> data) { data_ = data; };
-
-    //! \brief Gets the mode sets array to be tracked
-    ModeSet<Type> GetData() { return data_; };
-
-    //! \brief Gets the mode sets array to be tracked
-    vector<ModeSet<Type>> GetTrackedData() { return tracked_; };
-
     /*!
-        \brief Tracks the modes
+        \brief Mode tracking class
     */
-    void Track()
+    template <typename Type>
+    class ModeTracker
     {
-        // reset the results vector and preallocate memory
-        tracked_.clear();
-        tracked_.reserve(data_.size());
+    public:
+        // convenient type definition
+        typedef Eigen::Matrix<std::complex<Type>, Eigen::Dynamic, 1> tVector;
 
-        // add seed set as initial ModeSet
-        tracked_.push_back(data[0]);
+        //! \brief Default constructor
+        ModeTracker() = default;
 
-        // iterate through every ModeSet
-        for (int i = 0; i < data_.size() - 1; ++i)
+        //! \brief Destructor
+        ~ModeTracker() = default;
+
+        //! \brief Sets the mode sets array to be tracked
+        void SetData(const vector<ModeSet<Type>> &data) { data_ = data; };
+
+        //! \brief Gets the mode sets array to be tracked
+        ModeSet<Type> GetData() const { return data_; };
+
+        //! \brief Gets the mode sets array to be tracked
+        vector<ModeSet<Type>> GetTrackedData() const { return tracked_; };
+
+        /*!
+            \brief Tracks the modes
+        */
+        void Track()
         {
-            ModeSet<Type> set_temp;
+            // reset the results vector and preallocate memory
+            tracked_.clear();
+            tracked_.reserve(data_.size());
 
-            vector<int> exclude;
-            Type mac_temp;
+            // add seed set as initial ModeSet
+            tracked_.push_back(data[0]);
 
-            // iterate previous mode
-            for (int j = 0; j < tracked_[i].Size(); ++j)
+            // iterate through every ModeSet
+            for (int i = 0; i < data_.size() - 1; ++i)
             {
-                // best MAC for mode j
-                int best_index = 0;
-                Type mac_best = 0.0;
+                ModeSet<Type> set_temp;
 
-                std::complex<Type> best_val = data_[i + 1][0].evalue;
-                tVector best_vec = data_[i + 1][0].evector;
+                vector<int> exclude;
+                Type mac_temp;
 
-                // previous mode
-                tVector prev_mode = tracked_[i][j].evector;
-
-                // compare to other modes
-                for (int k = 0; k < data_[i + 1].Size(); ++k)
+                // iterate previous mode
+                for (int j = 0; j < tracked_[i].Size(); ++j)
                 {
-                    if (find(exclude.begin(), exclude.end(), k) != exclude.end())
+                    // best MAC for mode j
+                    int best_index = 0;
+                    Type mac_best = 0.0;
+
+                    std::complex<Type> best_val = data_[i + 1][0].evalue;
+                    tVector best_vec = data_[i + 1][0].evector;
+
+                    // previous mode
+                    tVector prev_mode = tracked_[i][j].evector;
+
+                    // compare to other modes
+                    for (int k = 0; k < data_[i + 1].Size(); ++k)
                     {
-                        continue;
-                    }
-                    else
-                    {
-                        tVector current_mode = data_[i + 1][k].evector;
-                        mac_temp = ComputeMAC(prev_mode, current_mode);
+                        if (find(exclude.begin(), exclude.end(), k) != exclude.end())
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            tVector current_mode = data_[i + 1][k].evector;
+                            mac_temp = mtk::ComputeMAC(prev_mode, current_mode);
+                        }
+
+                        if (mac_temp > mac_best)
+                        {
+                            // set new best MAC
+                            mac_best = mac_temp;
+
+                            // save previous mode
+                            best_index = k;
+                            best_val = data_[i + 1][k].evalue;
+                            best_vec = data_[i + 1][k].evector;
+                        }
                     }
 
-                    if (mac_temp > mac_best)
-                    {
-                        // set new best MAC
-                        mac_best = mac_temp;
-
-                        // save previous mode
-                        best_index = k;
-                        best_val = data_[i + 1][k].evalue;
-                        best_vec = data_[i + 1][k].evector;
-                    }
+                    // save the best mode and blacklist mode index
+                    set_temp.AddPair(best_val, best_vec);
+                    exclude.push_back(best_index);
                 }
 
-                // save the best mode and blacklist mode index
-                set_temp.AddPair(best_val, best_vec);
-                exclude.push_back(best_index);
+                tracked_.push_back(set_temp);
+
+                // reset blacklist
+                exclude.clear();
             }
+        };
 
-            tracked_.push_back(set_temp);
+    private:
+        //! \brief Vector of mode sets to be tracked
+        std::vector<ModeSet<Type>> data_;
 
-            // reset blacklist
-            exclude.clear();
-        }
+        //! \brief Vector of mode sets to be tracked
+        std::vector<ModeSet<Type>> tracked_;
     };
-
-private:
-    //! \brief Vector of mode sets to be tracked
-    std::vector<ModeSet<Type>> data_;
-
-    //! \brief Vector of mode sets to be tracked
-    std::vector<ModeSet<Type>> tracked_;
-};
+}

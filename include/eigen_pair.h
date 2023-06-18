@@ -43,7 +43,7 @@ namespace mtk
 			\param eval Eigenvalue
 			\param evec Eigenvector
 		*/
-		EigenPair(Type eval, Eigen::VectorXd evec)
+		EigenPair(const Type &eval, const Eigen::VectorXd &evec)
 		{
 			evalue = std::complex<Type>(eval, 0.0);
 			evector = tVector(evec);
@@ -55,7 +55,7 @@ namespace mtk
 			\param eval Eigenvalue
 			\param evec Eigenvector
 		*/
-		EigenPair(std::complex<Type> eval, tVector evec)
+		EigenPair(const std::complex<Type> &eval, const tVector &evec)
 		{
 			evalue = eval;
 			evector = evec;
@@ -75,7 +75,7 @@ namespace mtk
 
 			\returns Eigenvalue (scalar)
 		*/
-		std::complex<Type> Evalue()
+		const std::complex<Type> &Evalue() const
 		{
 			return evalue;
 		}
@@ -85,7 +85,7 @@ namespace mtk
 
 			\returns Eigenvector
 		*/
-		std::complex<Type> Evector()
+		const std::complex<Type> &Evector() const
 		{
 			return evalue;
 		}
@@ -95,7 +95,7 @@ namespace mtk
 
 			\returns Eigenvector
 		*/
-		void SetEvector(std::vector<std::complex<Type>> &input)
+		void SetEvector(const std::vector<std::complex<Type>> &input)
 		{
 			evector = tVector::Zero(input.size());
 
@@ -103,12 +103,11 @@ namespace mtk
 				evector(i) = input[i];
 		}
 
+	private:
 		//! \brief Eigenvalue
 		std::complex<Type> evalue;
 
 		//! \brief Eigenvector
 		tVector evector;
-
-	private:
 	};
 }
