@@ -25,9 +25,10 @@
 // Eigen headers
 #include <Eigen/Eigen>
 
+#include <eigen_pair.h>
+
 namespace mtk
 {
-
     /*!
         \brief ModeSet
     */
@@ -50,9 +51,7 @@ namespace mtk
         ModeSet(const Eigen::VectorXd &evals, const Eigen::MatrixXd &evecs)
         {
             for (int i = 0; i < evals.size(); i++)
-            {
                 AddPair(evals(i), evecs.col(i));
-            }
         };
 
         /*!
@@ -172,7 +171,7 @@ namespace mtk
             \param eval Eigenvalue
             \param evec Eigenvector
         */
-        MatrixXcd OutputEVectors() const
+        Eigen::MatrixXcd OutputEVectors() const
         {
             Eigen::MatrixXcd output(pairs_[0].evector.rows(), pairs_.size());
             for (int i = 0; i < pairs_.size(); i++)

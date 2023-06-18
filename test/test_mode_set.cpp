@@ -17,10 +17,12 @@
 */
 #include <gtest/gtest.h>
 
+#include <mode_set.h>
+
 // Test the data assignment and retrieval.
-TEST(EigenPairTests, Data)
+TEST(ModeSetTests, Data)
 {
-    mtk::ModeSet<double> set = ModeSet();
+    mtk::ModeSet<double> set = mtk::ModeSet<double>();
 
     // # assign two different eigenpairs
     // a = EigenPair(1.0, [0.0, 1.0])
