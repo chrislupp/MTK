@@ -1,8 +1,8 @@
-#===============================================================================
+# ===============================================================================
 #
 #     Modal Tool Kit (MTK)
 #
-#     Copyright 2017-2020 Christopher A. Lupp
+#     Copyright 2017-2023 Christopher A. Lupp
 #
 #     Licensed under the Apache License, Version 2.0 (the "License");
 #     you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 #     See the License for the specific language governing permissions and
 #     limitations under the License.
 #
-#===============================================================================
+# ===============================================================================
 
 import os
 import numpy
@@ -26,9 +26,8 @@ from setuptools.extension import Extension
 from Cython.Build import cythonize
 
 
-
 # Convert from local to absolute directories
-#-------------------------------------------
+# -------------------------------------------
 def GlobalDirectory(files):
     root_dir = os.path.abspath(os.path.dirname(__file__))
     new = []
@@ -70,20 +69,20 @@ inc_dirs.extend([numpy.get_include()])
 
 
 exts = [Extension('MTK.MTK', sources=['MTK/MTK.pyx'],
-            include_dirs=inc_dirs)
-    ]
+                  include_dirs=inc_dirs)
+        ]
 
 for e in exts:
-    e.cython_directives = {"embedsignature": True, "binding":True}
+    e.cython_directives = {"embedsignature": True, "binding": True}
 
 setup(name='modaltoolkit',
-    version='3.0.3',
-    description='Modal Tool Kit',
-    author='Christopher A. Lupp',
-    author_email='clupp@umich.edu',
-    include_package_data=True,
-    packages = find_packages(),
-    package_data = {"MTK": ['*.pxd','include/*']},
-    ext_modules=cythonize(exts),
-    install_requires = ['numpy','h5py','eigency','sphinx', 'matplotlib']
-    )
+      version='3.0.3',
+      description='Modal Tool Kit',
+      author='Christopher A. Lupp',
+      author_email='clupp@umich.edu',
+      include_package_data=True,
+      packages=find_packages(),
+      package_data={"MTK": ['*.pxd', 'include/*']},
+      ext_modules=cythonize(exts),
+      install_requires=['numpy', 'h5py', 'eigency', 'sphinx', 'matplotlib']
+      )

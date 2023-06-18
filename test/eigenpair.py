@@ -1,7 +1,7 @@
 """
     Modal Tool Kit (MTK)
 
-    Copyright 2017-2020 Christopher A. Lupp
+    Copyright 2017-2023 Christopher A. Lupp
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -28,28 +28,25 @@ class CheckEigenPair(unittest.TestCase):
         """
         a = EigenPair()
 
-
     def test_AlternateCreation(self):
         """
         Tests the basic creation of an EigenPair with initial values.
         """
         a = EigenPair(1.0, [0.0, 1.0])
-        
+
         # check the value and vector
         self.assertTrue(a["value"] == 1.0)
         self.assertTrue((a["vector"] == [0.0, 1.0]).all())
-
 
     def test_AlternateCreationComplex(self):
         """
         Tests the basic creation of an EigenPair with initial complex values.
         """
         a = EigenPair(1.0 + 1.0*1j, [0.0, 1.0 + 1.0 * 1j])
-        
+
         # check the value and vector
         self.assertTrue(a["value"] == 1.0 + 1*1j)
         self.assertTrue((a["vector"] == [0.0, 1.0 + 1.0*1j]).all())
-
 
     def test_Properties(self):
         """
@@ -60,7 +57,6 @@ class CheckEigenPair(unittest.TestCase):
         # check the value and vector
         self.assertTrue(a.value == 1.0 + 1*1j)
         self.assertTrue((a.vector == [0.0, 1.0 + 1.0*1j]).all())
-
 
 
 def main():

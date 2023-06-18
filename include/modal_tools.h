@@ -1,7 +1,7 @@
 /*
     Modal Tool Kit (MTK)
 
-    Copyright 2017-2020 Christopher A. Lupp
+    Copyright 2017-2023 Christopher A. Lupp
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,9 +15,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 #pragma once
-
 
 // system headers
 #include <complex>
@@ -26,49 +24,44 @@
 #include <Eigen/Eigen>
 
 // MTK headers
-#include "mtk_datatypes.h"
-
-
-using namespace std;
-using namespace Eigen;
-
+#include "eigen_pair.h"
+#include "mode_set.h"
 
 /*!
     \brief Computes the Modal Assurance Criterion between two vectors
 */
-template<typename Type>
-Type ComputeMAC(Matrix<std::complex<Type>, Eigen::Dynamic, 1> phi1,
-    Matrix<std::complex<Type>, Eigen::Dynamic, 1> phi2)
+template <typename Type>
+Type ComputeMAC(Eigen::Matrix<std::complex<Type>, Eigen::Dynamic, 1> phi1,
+                Eigen::Matrix<std::complex<Type>, Eigen::Dynamic, 1> phi2)
 {
     // note: {expression}(0) is used here as a work around to keep datatypes
     // consistent. This works in this scope, because the results of the
     // expressions must be a scalar. Thus, calling the first entry just
     // forces the output as a double.
-    Type mac = (pow(abs((phi1.adjoint() * phi2)(0)), 2) /
-        (phi1.adjoint() * phi1 * phi2.adjoint() * phi2)(0)).real();
+    Type mac = (std::pow(std::abs((phi1.adjoint() * phi2)(0)), 2) /
+                (phi1.adjoint() * phi1 * phi2.adjoint() * phi2)(0))
+                   .real();
 
     return mac;
 };
 
-
 /*!
     \brief Computes the Modal Assurance Criterion between two eigen pairs
 */
-template<typename Type>
+template <typename Type>
 Type ComputeMAC(EigenPair<Type> pair1, EigenPair<Type> pair2)
 {
     return ComputeMAC(pair1.evector, pair2.evector);
 };
 
-
 /*!
     \brief Comparison of two mode sets (using MAC)
 */
-template<typename Type>
-Matrix<Type, Eigen::Dynamic, Eigen::Dynamic> SetsComputeMAC(ModeSet<Type> set1,
-    ModeSet<Type> set2)
+template <typename Type>
+Eigen::Matrix<Type, Eigen::Dynamic, Eigen::Dynamic> ComputeMAC(ModeSet<Type> set1,
+                                                               ModeSet<Type> set2)
 {
-    typedef Matrix<Type, Eigen::Dynamic, Eigen::Dynamic> tMatrix;
+    typedef Eigen::Matrix<Type, Eigen::Dynamic, Eigen::Dynamic> tMatrix;
 
     // preallocate MAC matrix
     tMatrix mac;

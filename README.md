@@ -1,7 +1,6 @@
 
 
 # Modal Tool Kit (MTK)
-[![Build Status](https://travis-ci.com/chrislupp/MTK.svg?branch=master)](https://travis-ci.com/chrislupp/MTK)
 
 
 The Modal Tool Kit (MTK) is a C++/Python library that defines useful datatypes
@@ -15,7 +14,7 @@ If you find MTK useful and use it in a work, please cite this work:
         author =   {Christopher A. Lupp},
         title =    {{MTK}: {The} {Modal} {Toolkit}},
         howpublished = {\url{https://github.com/chrislupp/MTK}},
-        year = {2017--2020}
+        year = {2017--2023}
     }
 
     @inproceedings{LuppCesnik2018,
@@ -56,7 +55,7 @@ If the command exits successfully, MTK should now be installed on your system.
 
 ## License
 
-Copyright 2017-2020 Christopher A. Lupp
+Copyright 2017-2023 Christopher A. Lupp
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

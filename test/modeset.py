@@ -1,7 +1,7 @@
 """
     Modal Tool Kit (MTK)
 
-    Copyright 2017-2020 Christopher A. Lupp
+    Copyright 2017-2023 Christopher A. Lupp
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ class CheckModeSet(unittest.TestCase):
         """
         a = ModeSet()
 
-
     def test_Assignment(self):
         """
         Tests the basic instantiation of an EigenPair with initial values.
@@ -45,7 +44,6 @@ class CheckModeSet(unittest.TestCase):
         # check the values and vectors
         self.assertTrue((set.values == [1.0, 2.0]).all())
         self.assertTrue((set.vectors == [[0.0, 1.0], [1.0, 0.0]]).all())
-
 
 
 def main():

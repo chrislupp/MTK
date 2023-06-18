@@ -1,7 +1,7 @@
 """
     Modal Tool Kit (MTK)
 
-    Copyright 2017-2020 Christopher A. Lupp
+    Copyright 2017-2023 Christopher A. Lupp
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ def LoadData(fname):
     return data
 
 
-
 class CheckModeTracker(unittest.TestCase):
 
     def test_DefaultCreation(self):
@@ -43,7 +42,6 @@ class CheckModeTracker(unittest.TestCase):
         Tests the basic instantiation of a ModeTracker object.
         """
         tracker = ModeTracker()
-
 
     def test_ModeTrackingReal(self):
         """
@@ -70,7 +68,7 @@ class CheckModeTracker(unittest.TestCase):
 
                 # set the eigenvalue and eigenvector
                 pair.value = evals[j]
-                pair.vector = evecs[:,j]
+                pair.vector = evecs[:, j]
 
                 # add the pair to the mode set
                 set.AddPair(pair)
@@ -91,10 +89,10 @@ class CheckModeTracker(unittest.TestCase):
         # obtain the tracked data
         results = tracker.tracked_data
 
-        freq = zeros([10,11])
-        for i,set in enumerate(results):
+        freq = zeros([10, 11])
+        for i, set in enumerate(results):
             for j in range(set.Size()):
-                freq[j,i] = set[j].value.real
+                freq[j, i] = set[j].value.real
 
         # load the reference data from file
         data = LoadData("deformed_modal/results.csv")
@@ -104,7 +102,6 @@ class CheckModeTracker(unittest.TestCase):
 
         # check if the test passed compared to reference data
         self.assertTrue(status)
-
 
     # def test_ModeTrackingImag(self):
     #     """
