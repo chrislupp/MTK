@@ -85,9 +85,9 @@ namespace mtk
 
 			\returns Eigenvector
 		*/
-		const std::complex<Type> &Evector() const
+		const Eigen::VectorXcd &Evector() const
 		{
-			return evalue;
+			return evector;
 		}
 
 		/*!

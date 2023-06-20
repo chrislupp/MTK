@@ -27,32 +27,16 @@ TEST(EigenPairTests, Constructor)
     vec << 0.0, 1.0;
     mtk::EigenPair<double> eigen_pair1 = mtk::EigenPair(1.0, vec);
 
-    // check the eigenvalue and eigenvector
+    // check that all values were assigned correctly
+    EXPECT_TRUE(eigen_pair1.Evalue().real() == 1.0);
+    EXPECT_TRUE(eigen_pair1.Evector().real().isApprox(vec));
 
-    // #check the value and vector
-    //             self.assertTrue(a["value"] == 1.0)
-    //                 self.assertTrue((a["vector"] == [ 0.0, 1.0 ]).all())
-    // a = EigenPair(1.0 + 1.0*1j, [0.0, 1.0 + 1.0 * 1j])
+    Eigen::VectorXcd vec_cplx(2);
+    vec_cplx << std::complex<double>(1.0, 1.0), std::complex<double>(1.0, 1.0);
+    mtk::EigenPair<double> eigen_pair2 = mtk::EigenPair(std::complex(1.0, 1.0), vec_cplx);
 
-    // check other constructor
-    // mtk::EigenPair<double> eigen_pair2 = mtk::EigenPair(1.0, {0.0, 1.0});
-
-    //     # check the value and vector
-    //     self.assertTrue(a["value"] == 1.0 + 1*1j)
-    //     self.assertTrue((a["vector"] == [0.0, 1.0 + 1.0*1j]).all())
+    // check that all values were assigned correctly
+    EXPECT_TRUE(eigen_pair2.Evalue().real() == 1.0);
+    EXPECT_TRUE(eigen_pair2.Evalue().imag() == 1.0);
+    EXPECT_TRUE(eigen_pair2.Evector().isApprox(vec_cplx));
 }
-
-// Test the data assignment and retrieval.
-TEST(EigenPairTests, Data)
-{
-    // mtk::EigenPair<double> eigen_pair1 = mtk::EigenPair(1.0, {0.0, 1.0});
-}
-// def test_Properties(self):
-//     """
-//     Tests the evaluation of the value and vector properties.
-//     """
-//     a = EigenPair(1.0 + 1.0*1j, [0.0, 1.0 + 1.0 * 1j])
-
-//     # check the value and vector
-//     self.assertTrue(a.value == 1.0 + 1*1j)
-//     self.assertTrue((a.vector == [0.0, 1.0 + 1.0*1j]).all())
