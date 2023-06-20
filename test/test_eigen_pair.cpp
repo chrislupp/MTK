@@ -40,3 +40,8 @@ TEST(EigenPairTests, Constructor)
     EXPECT_TRUE(eigen_pair2.Evalue().imag() == 1.0);
     EXPECT_TRUE(eigen_pair2.Evector().isApprox(vec_cplx));
 }
+
+// Test the constructor.
+TEST(EigenPairTests, Data)
+{
+}

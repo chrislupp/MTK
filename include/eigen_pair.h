@@ -64,10 +64,20 @@ namespace mtk
 		//! \brief Destructor
 		~EigenPair() = default;
 
-		void SetEigenPair(const EigenPair<Type> &pair)
+		void Set(const EigenPair<Type> &pair)
 		{
 			evalue = pair.evalue;
 			evector = pair.evector;
+		}
+
+		/*!
+			\brief Sets the eigenvector of the eigenpair
+
+			\returns Eigenvector
+		*/
+		void SetEvalue(const std::complex<Type> &input)
+		{
+			evalue = input;
 		}
 
 		/*!

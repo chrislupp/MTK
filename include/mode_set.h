@@ -79,7 +79,7 @@ namespace mtk
         */
         void AddPair(const Type &eval, const Eigen::VectorXd &evec)
         {
-            pairs_.push_back(EigenPair<Type>(eval, evec));
+            AddPair(EigenPair<Type>(eval, evec));
         };
 
         /*!
@@ -90,7 +90,7 @@ namespace mtk
         */
         void AddPair(const std::complex<Type> &eval, const tVector &evec)
         {
-            pairs_.push_back(EigenPair<Type>(eval, evec));
+            AddPair(EigenPair<Type>(eval, evec));
         };
 
         /*!
@@ -159,7 +159,7 @@ namespace mtk
             tVector output(pairs_.size());
             for (int i = 0; i < pairs_.size(); i++)
             {
-                output(i) = pairs_[i].evalue;
+                output(i) = pairs_[i].Evalue();
             }
 
             return output;
@@ -173,9 +173,9 @@ namespace mtk
         */
         Eigen::MatrixXcd OutputEVectors() const
         {
-            Eigen::MatrixXcd output(pairs_[0].evector.rows(), pairs_.size());
+            Eigen::MatrixXcd output(pairs_[0].Evector().rows(), pairs_.size());
             for (int i = 0; i < pairs_.size(); i++)
-                output.col(i) = pairs_[i].evector;
+                output.col(i) = pairs_[i].Evector();
 
             return output;
         };
